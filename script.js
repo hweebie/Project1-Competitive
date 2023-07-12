@@ -25,6 +25,7 @@ const highScoreButton = document.querySelector(".highscore");
 const homeButton = document.querySelector(".home");
 const playMiniGameButton = document.querySelector("#playminigame");
 const restartButton = document.querySelector("#restart");
+const nextGameButton = document.querySelector(".next-game");
 
 //Landing page elements
 const homepage = document.querySelector(".homepage");
@@ -96,6 +97,7 @@ homeButton.addEventListener("click", renderHomepage);
 startButton.addEventListener("click", startGame);
 playMiniGameButton.addEventListener("click", playMiniGame1);
 restartButton.addEventListener("click", restartGame);
+nextGameButton.addEventListener("click", startNextGame);
 
 /*----- functions -----*/
 
@@ -203,7 +205,6 @@ function renderStack(numArray) {
 
 //Render player's controls on game screen to guide player
 function renderPlayerControls(playerControlArray, displayLocation) {
-  console.log("player control function");
   displayLocation.innerHTML = "";
   for (let i = 0; i < playerControlArray.length; i++) {
     const newBlock = document.createElement("div");
@@ -330,6 +331,13 @@ function checkHighScore(winner, currentScore, highScores) {
     highScores.pop();
   }
 }
+
+//TODO: Build game 2 instruction skeleton
+function startNextGame() {
+  console.log("Load next game's instructions");
+}
+
+//TODO: Build game 2 page skeleton
 
 //When player clicks "Play again", go back to homepage
 function restartGame() {
