@@ -20,15 +20,14 @@ A two-player arcade game where players play a series of competitive minigames ag
 # Getting Started
 
 - [Click to Play Hyper Bishi Bashwee!][2]
-- [MVP Version][3]
 
-[2]: hyperbishibashwee.netlify.app
-[3]: https://hyperbishibashweemvp.netlify.app/
+[2]: https://hyperbishibashwee.netlify.app
 
 # Version History
 
 - v1.1.0 [Current version - add competitive play][2]
-- v1.0.0 [First version - single player][3]
+- v1.0.0 [MVP - single player][3]
+  [3]: https://hyperbishibashweemvp.netlify.app/
 
 # Next Steps
 
