@@ -19,7 +19,8 @@ const players = [
 ];
 let player1Score = 0;
 let highScoreNameInput = "";
-const player1Controls = ["KeyA", "KeyS", "KeyD"]; //Player 1's key controls.
+const player1Controls = ["KeyA", "KeyS", "KeyD"];
+const player2Controls = ["ArrowLeft", "ArrowDown", "ArrowRight"];
 
 //TODO: Add player 2 controls
 
@@ -202,7 +203,7 @@ function renderPlayerControls(playerControlArray, playerControlDisplay) {
     }
     //append to player's screen
     if (playerControlArray[i] === "ArrowDown") {
-      newBlock.innerText = "↑";
+      newBlock.innerText = "↓";
     } else if (playerControlArray[i] === "ArrowLeft") {
       newBlock.innerText = "←";
     } else if (playerControlArray[i] === "ArrowRight") {
@@ -232,7 +233,6 @@ function playGame() {
 }
 
 function clearBlocks(e) {
-  //TODO: add player 2 gameplay
   if (player1Controls.includes(e.code)) {
     //detect valid key input
     if (
@@ -242,6 +242,19 @@ function clearBlocks(e) {
     ) {
       player1SuccessSound.play();
       player1Screen.lastElementChild.remove();
+    } else {
+      errorSound.play();
+    }
+  } else if (player2Controls.includes(e.code)) {
+    console.log(e.code);
+    //detect valid key input
+    if (
+      //compare with bottommost block
+      player2Controls.indexOf(e.code) ===
+      parseInt(player2Screen.lastElementChild.getAttribute("value"))
+    ) {
+      player1SuccessSound.play();
+      player2Screen.lastElementChild.remove();
     } else {
       errorSound.play();
     }
