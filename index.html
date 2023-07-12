@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HYPER BISHI BASHWEE CHAMPS</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="homepage">
+      <div class="page-header">
+        Let's play<br /><span class="game-title">HYPER BISHI BASHWEE!</span>
+      </div>
+      <div class="homepage-info">Version 1.0.0</div>
+      <div class="homepage-buttons">
+        <button type="button" class="btn btn-primary start">Start</button>
+        <button type="button" class="btn btn-light highscore">
+          High Scores
+        </button>
+      </div>
+    </div>
+
+    <div class="highscorepage">
+      <div class="page-header">
+        <span class="high-score-title">HIGH SCORES</span>
+      </div>
+      <table class = "table high-score-table"></table>
+      <button type="button" class="btn btn-primary home">Back</button>
+    </div>
+
+    <div class="container instructionpage" id="daruma">
+      <div class="page-header">
+        <span class="game-title">JUST WHACK IT!</span>
+      </div>
+
+      <div class="page-sub-header">
+        <span class="game-title">INSTRUCTIONS</span>
+      </div>
+      <div class="row instructions-body">
+        <div class="instructions-screenshot col-sm-6">
+          <img src = "./Assets/minigame-1-instructions.gif" alt = "Video walkthrough of block game" id = "minigame-1-instruction-gif">
+        </div>
+        <div class="instructions-text col-sm-6">
+          <p>Hit the same colour as that of the bottom block.</p>
+          <p>Clear the blocks in the shortest time possible!</p>
+        </div>
+        
+      </div>
+      <br/>
+      <button type="button" class="btn btn-success" id="playminigame">
+        Start!
+      </button>
+    </div>
+
+    <div class="gamepage" id="daruma">
+      <div class="page-header">
+        <span class="game-title">JUST WHACK IT!</span>
+      </div>
+
+      <div class="row game-body">
+        <div class=" player-col" id="player-1-col">
+          <div class="player-gamescreen" id="player-1-gamescreen"></div>
+          <div class="player-gamescreen-footer bg-dark text-white">
+            <span>Player 1</span><br />
+            <span class = "player-timer">0:00</span> secs<br /><br />
+            <div class ="player-1-controls">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row game-over-page">
+      <div class="page-sub-header">
+        <span class="winning-message">Game over!</span><br /><br />
+       </div>
+       <div class="score-container">
+        Your Score:
+        <span class="score-display">0:00</span><br /><br />
+      </div>
+      <div>      <button type="button" class="btn btn-primary" id="playagain">
+        Play Again
+      </button>
+</div>
+
+    </div>
+  </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>
