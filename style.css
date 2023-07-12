@@ -17,7 +17,9 @@ div {
 .page-header {
   font-size: 1.5em;
 }
-
+#homepageimage {
+  max-width: 800px;
+}
 .game-title {
   font-size: 2em;
 }
