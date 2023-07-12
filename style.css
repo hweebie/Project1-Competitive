@@ -15,11 +15,17 @@ div {
 }
 
 .page-header {
+  font-size: 2em;
+}
+
+.page-sub-header {
   font-size: 1.5em;
 }
+
 #homepageimage {
   max-width: 800px;
 }
+
 .game-title {
   font-size: 2em;
 }
@@ -130,7 +136,7 @@ div {
   vertical-align: bottom;
 }
 
-.game-over-page {
+.game1endpage {
   display: none;
 }
 

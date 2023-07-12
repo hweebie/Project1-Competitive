@@ -1,12 +1,6 @@
 /*----- constants -----*/
 
 //Game configs
-const highScores = [
-  // default high scores
-  { name: "Desmond", score: 6.0 },
-  { name: "Lian Kai", score: 8.0 },
-  { name: "Chicken", score: 10.0 },
-];
 const players = [
   {
     name: "player1",
@@ -21,8 +15,6 @@ const players = [
     winCount: 0,
   },
 ];
-let darumaWinnerScore = 0;
-let highScoreNameInput = "";
 
 /*----- Cached elements -----*/
 
@@ -39,7 +31,8 @@ const homepage = document.querySelector(".homepage");
 const highScorePage = document.querySelector(".highscorepage");
 const highScoreTable = document.querySelector(".high-score-table");
 
-//Game page elements
+//Game 1 page elements
+const darumaBlock = document.querySelector(".darumablock");
 const gameTimerDisplay = document.querySelectorAll(".player-timer");
 const game1Page = document.querySelector(".game1page");
 const game1InstructionPage = document.querySelector(".game1instructionpage");
@@ -60,13 +53,20 @@ const gameScreenPlayer2ControlDisplay = document.querySelector(
 );
 players[0].gameScreen = player1Screen;
 players[1].gameScreen = player2Screen;
-const gameOverScreen = document.querySelector(".game-over-page");
+const game1EndPage = document.querySelector(".game1endpage");
 
-//Daruma minigame variables
+//Game 1 variables
 const stackHeight = 1; // default stack height
 let gameTimer = null;
 let gameInterval = null;
-const darumaBlock = document.querySelector(".darumablock");
+const highScores = [
+  // default high scores
+  { name: "Desmond", score: 0.1 },
+  { name: "Lian Kai", score: 0.1 },
+  { name: "Chicken", score: 0.1 },
+];
+let game1WinnerScore = 0;
+let highScoreNameInput = "";
 
 //Sound constructor
 function sound(src) {
@@ -94,7 +94,7 @@ const gameOverSound = new sound("./Assets/gameover.wav");
 highScoreButton.addEventListener("click", renderHighScorePage);
 homeButton.addEventListener("click", renderHomepage);
 startButton.addEventListener("click", startGame);
-playMiniGameButton.addEventListener("click", playMiniGame);
+playMiniGameButton.addEventListener("click", playMiniGame1);
 restartButton.addEventListener("click", restartGame);
 
 /*----- functions -----*/
@@ -154,13 +154,13 @@ function startGame() {
 }
 
 //Start mini game when player clicks "Start" after viewing instructions
-function playMiniGame() {
-  renderGame();
-  playGame();
+function playMiniGame1() {
+  renderGame1();
+  playGame1();
 }
 
 //Functions to render minigame board
-function renderGame() {
+function renderGame1() {
   game1InstructionPage.style.display = "none"; //hide current page
   game1Page.style.display = "block"; //render game page
   players.forEach((player) => (player.gameScreen.innerHTML = ""));
@@ -232,7 +232,7 @@ function renderPlayerControls(playerControlArray, displayLocation) {
 }
 
 //Game play. Detect player keystrokes and clear blocks
-function playGame() {
+function playGame1() {
   gameTimer = 0;
   gameInterval = setInterval(incrementTimer, 10);
   function incrementTimer() {
@@ -283,7 +283,8 @@ function checkForWin() {
   ) {
     clearInterval(gameInterval);
     gameOverSound.play();
-
+    document.removeEventListener("keydown", checkForWin);
+    //update winner
     if (players[0].gameScreen.innerHTML === "") {
       winner = players[0];
       players[0].winCount = players[0].winCount + 1;
@@ -294,22 +295,22 @@ function checkForWin() {
       renderGameEndPage(players[1].displayName);
     }
 
-    checkHighScore(winner, darumaWinnerScore, highScores);
+    checkHighScore(winner, game1WinnerScore, highScores);
   }
 }
 
 function renderGameEndPage(winnerName) {
   game1Page.style.display = "none";
-  gameOverScreen.style.display = "block";
+  game1EndPage.style.display = "block";
 
   //Display winner
   document.querySelector(".winning-player").innerText = `WINNER: ${winnerName}`;
 
   //Display scores
-  darumaWinnerScore = gameTimer / 100;
+  game1WinnerScore = gameTimer / 100;
   document.querySelector(
     ".game-score-display"
-  ).innerHTML = `Winner's Score: ${darumaWinnerScore.toFixed(2)} secs`;
+  ).innerHTML = `Winner's Score: ${game1WinnerScore.toFixed(2)} secs`;
   document.querySelector("#player-1-win-count").innerHTML = players[0].winCount; //not working
   document.querySelector("#player-2-win-count").innerHTML = players[1].winCount;
 }
@@ -332,7 +333,7 @@ function checkHighScore(winner, currentScore, highScores) {
 
 //When player clicks "Play again", go back to homepage
 function restartGame() {
-  gameOverScreen.style.display = "none"; //hide gamepage
+  game1EndPage.style.display = "none"; //hide gamepage
   document.querySelector(".homepage").style.display = "block"; //render homepage
 }
 /*----- main function -----*/
