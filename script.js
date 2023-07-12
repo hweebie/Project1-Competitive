@@ -23,8 +23,9 @@ const homepageButtons = document.querySelector("#homepage-buttons");
 const startButton = document.querySelector(".start");
 const highScoreButton = document.querySelector(".highscore");
 const homeButton = document.querySelector(".home");
-const playMiniGameButton = document.querySelector("#playminigame");
-const restartButton = document.querySelector("#restart");
+const playGame1Button = document.querySelector("#playgame1");
+const gameEndHomeButton = document.querySelector("#gohome");
+const replayGame1Button = document.querySelector(".replaygame1");
 const nextGameButton = document.querySelector(".next-game");
 
 //Landing page elements
@@ -94,9 +95,10 @@ const gameOverSound = new sound("./Assets/gameover.wav");
 
 highScoreButton.addEventListener("click", renderHighScorePage);
 homeButton.addEventListener("click", renderHomepage);
-startButton.addEventListener("click", startGame);
-playMiniGameButton.addEventListener("click", playMiniGame1);
-restartButton.addEventListener("click", restartGame);
+startButton.addEventListener("click", renderGame1Instructions);
+playGame1Button.addEventListener("click", startGame1);
+gameEndHomeButton.addEventListener("click", loadHomepage);
+replayGame1Button.addEventListener("click", replayGame1);
 nextGameButton.addEventListener("click", startNextGame);
 
 /*----- functions -----*/
@@ -142,7 +144,7 @@ function renderHomepage() {
 }
 
 //Render game instructions. Triggered by player clicking "Start"
-function startGame() {
+function renderGame1Instructions() {
   homepage.style.display = "none"; //hide homepage
   game1InstructionPage.style.display = "block"; //render instructions page
   renderPlayerControls(
@@ -156,7 +158,7 @@ function startGame() {
 }
 
 //Start mini game when player clicks "Start" after viewing instructions
-function playMiniGame1() {
+function startGame1() {
   renderGame1();
   playGame1();
 }
@@ -332,17 +334,66 @@ function checkHighScore(winner, currentScore, highScores) {
   }
 }
 
+//When player clicks "Home", go back to homepage
+function loadHomepage() {
+  game1EndPage.style.display = "none";
+  homepage.style.display = "block";
+}
+//When player clicks "Play again", play same game again
+function replayGame1() {
+  game1EndPage.style.display = "none";
+  game1InstructionPage.style.display = "block";
+}
+
+const gameInstructions = [
+  {},
+  {
+    gameIndex: 1,
+    title: "KOPITIAM HERO",
+    imgHTML: "Image goes here",
+    text: "Prepare the orders correctly!",
+  },
+];
+
 //TODO: Build game 2 instruction skeleton
 function startNextGame() {
   console.log("Load next game's instructions");
-}
-
-//TODO: Build game 2 page skeleton
-
-//When player clicks "Play again", go back to homepage
-function restartGame() {
   game1EndPage.style.display = "none"; //hide gamepage
-  document.querySelector(".homepage").style.display = "block"; //render homepage
+  game1InstructionPage.style.display = "block"; //render instructions page
+
+  //render next game instructions
+  document.querySelector(".instructions-title").innerText =
+    gameInstructions[1].title;
+  document.querySelector(".instructions-screenshot").innerHTML =
+    gameInstructions[1].imgHTML;
+  document.querySelector(".instructions-text").innerHTML =
+    gameInstructions[1].text;
+
+  //remove game 1 start button
+  playGame1Button.remove();
+
+  //append game 2 start button
+  let startGame2Button = document.createElement("button");
+  startGame2Button.innerText = "Start!";
+  startGame2Button.setAttribute("class", "btn btn-danger");
+  startGame2Button.setAttribute("id", "playgame2");
+  game1InstructionPage.appendChild(startGame2Button);
+  startGame2Button.addEventListener("click", startGame2);
 }
+
+function startGame2() {
+  console.log("Start game 2");
+  //render game 2 page
+
+  renderGame2();
+  //playGame2();
+}
+function renderGame2() {
+  console.log("Render game 2");
+  // game1InstructionPage.style.display = "none"; //hide current page
+  // document.querySelector(".game2page").style.display = "block"; //render game page
+  //TODO: Build game 2 page skeleton
+}
+
 /*----- main function -----*/
 init();

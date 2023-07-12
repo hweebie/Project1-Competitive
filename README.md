@@ -15,8 +15,10 @@ This is a branch created to work on the stretch goal.
 - CSS
 - Bootstrap frontend toolkit
 - [Ezgif gif maker][1] - to create instruction gifs
+- [Pixilart][4] - to create pixel art
 
   [1]: ezgif.com/
+  [4]: https://www.pixilart.com/
 
 # Getting Started
 
@@ -63,14 +65,15 @@ v1.0.0 [First version][2]
 
 1. Add Player 2 - done
 2. Add player keys to instructions page - done
-3. Use local storage to store high scores
+3. Use local storage to store high scores - skipped
 
    --v1.1.0 Complete--
 
-4. Add one mini game
+4. Improve styling
+5. Add one mini game (Burger Game: https://youtu.be/Q9Ihi8B9z5U?t=128 or https://www.youtube.com/watch?v=opPbSlJPLXg&t=12s)
 
 ## 13 Jul 2023 (Stretch goal)
 
-1. Player can select game
-2. Styling
+1. Complete mini game
+
    --v1.2.0 Complete--

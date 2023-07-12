@@ -46,7 +46,7 @@
 
     <div class="container game1instructionpage">
       <div class="page-header">
-        <span class="game-title">JUST WHACK ONLY!</span>
+        <span class="game-title instructions-title">JUST WHACK ONLY!</span>
       </div>
 
       <div class="page-sub-header">
@@ -60,11 +60,12 @@
             id="instructions-image"
           />
         </div>
-        <div class="instructions-text col-sm-8">
-          <p>Hit the same colour as that of the bottom block.</p>
-          <p>Play for time.</p>
-          <p><strong>The fastest player wins!</strong></p>
-
+        <div class="instructions-right-column col-sm-8">
+          <div class="instructions-text">
+            <p>Hit the same colour as that of the bottom block.</p>
+            <p>Play for time.</p>
+            <p><strong>The fastest player wins!</strong></p>
+          </div>
           <div class="row instructions-controls">
             <div class="col-sm-6">
               PLAYER 1: BASH
@@ -85,7 +86,7 @@
       </div>
 
       <br />
-      <button type="button" class="btn btn-danger" id="playminigame">
+      <button type="button" class="btn btn-danger" id="playgame1">
         Start!
       </button>
     </div>
@@ -126,7 +127,7 @@
 
     <div class="game1endpage">
       <div class="page-header">
-        <span class="winning-message">Game over!</span><br />
+        <span class="winning-message">Game over!</span><br /><br />
         <span class="winning-player"></span><br />
       </div>
       <div class="game-score-display"></div>
@@ -146,10 +147,19 @@
           <button type="button" class="btn btn-danger next-game">
             Next Game
           </button>
-          <button type="button" class="btn btn-secondary" id="restart">
+          <button type="button" class="btn btn-secondary replaygame1">
+            Play again
+          </button>
+          <button type="button" class="btn btn-secondary" id="gohome">
             Home
           </button>
         </div>
+      </div>
+    </div>
+
+    <div class="game2page">
+      <div class="page-header">
+        <span class="game-title"></span>
       </div>
     </div>
 
