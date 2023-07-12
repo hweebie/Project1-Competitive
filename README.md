@@ -4,8 +4,8 @@ A two-player arcade game where players play a series of competitive minigames ag
 
 # Screenshots
 
-<img src="./Assets/gameplay-instructions.gif">
-<img src="./Assets/gameplay.gif">
+<img src="./Assets/gameplay-instructions.png">
+<img src="./Assets/gameplay.mov">
 
 # Technologies Used
 
