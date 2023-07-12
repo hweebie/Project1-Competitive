@@ -29,29 +29,36 @@ div {
 .highscorepage {
   display: none;
 }
+
 .score-display {
   font-size: 2em;
 }
+
 .high-score-message {
   color: orange;
 }
+
 .instructionpage {
   display: none;
 }
+
 .instructions-screenshot {
   border-style: solid;
   border-radius: 5px;
   border-color: black;
   height: 400px;
 }
+
 #minigame-1-instruction-gif {
   max-width: 98%;
   max-height: 98%;
 }
+
 .instructions-body {
   flex-direction: row;
   align-items: center;
 }
+
 .gamepage {
   display: none;
 }
@@ -69,6 +76,7 @@ div {
   border-style: solid;
   border-width: 2px;
 }
+
 .daruma-block {
   color: black;
   height: 40px;
@@ -82,9 +90,11 @@ div {
 .player-gamescreen-footer {
   height: 170px;
 }
+
 .player-timer {
   font-size: 1.5em;
 }
+
 .player-controls {
   font-size: 0.7em;
   background-color: darkgrey;
@@ -96,6 +106,7 @@ div {
   margin: 5px;
   align-self: end;
 }
+
 .player-control-key {
   border-style: solid;
   border-radius: 10px;
@@ -103,6 +114,7 @@ div {
   width: 40px;
   margin: 1px auto;
 }
+
 .player-score {
   vertical-align: bottom;
 }
@@ -110,7 +122,11 @@ div {
 .game-over-page {
   display: none;
 }
+
 .winning-message {
   font-size: 2em;
 }
-/* TODO: align player score to bottom*/
+
+.winning-player {
+  font-size: 2em;
+}

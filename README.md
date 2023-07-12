@@ -61,10 +61,13 @@ v1.0.0 [First version][2]
 
 ## 12 Jul 2023 (Stretch goal)
 
-1. Use local storage to store high scores
-2. Add Player 2
+1. Add Player 2 - done
+2. Improve styling
+3. Use local storage to store high scores
+
    --v1.1.0 Complete--
-3. Add one mini game
+
+4. Add one mini game
 
 ## 13 Jul 2023 (Stretch goal)
 
