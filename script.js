@@ -80,6 +80,7 @@ function sound(src) {
 }
 //TODO: Add player 2 sound
 const player1SuccessSound = new sound("./Assets/player1.wav");
+const player2SuccessSound = new sound("./Assets/player2.wav");
 const errorSound = new sound("./Assets/error.wav");
 const highScoreSound = new sound("./Assets/victory.wav");
 const gameOverSound = new sound("./Assets/gameover.wav");
@@ -233,11 +234,11 @@ function playGame() {
 }
 
 function clearBlocks(e) {
-  if (player1Controls.includes(e.code)) {
+  if (players[0].controls.includes(e.code)) {
     //detect valid key input
     if (
       //compare with bottommost block
-      player1Controls.indexOf(e.code) ===
+      players[0].controls.indexOf(e.code) ===
       parseInt(player1Screen.lastElementChild.getAttribute("value"))
     ) {
       player1SuccessSound.play();
@@ -245,15 +246,12 @@ function clearBlocks(e) {
     } else {
       errorSound.play();
     }
-  } else if (player2Controls.includes(e.code)) {
-    console.log(e.code);
-    //detect valid key input
+  } else if (players[1].controls.includes(e.code)) {
     if (
-      //compare with bottommost block
-      player2Controls.indexOf(e.code) ===
+      players[1].controls.indexOf(e.code) ===
       parseInt(player2Screen.lastElementChild.getAttribute("value"))
     ) {
-      player1SuccessSound.play();
+      player2SuccessSound.play();
       player2Screen.lastElementChild.remove();
     } else {
       errorSound.play();
