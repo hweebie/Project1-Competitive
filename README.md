@@ -1,6 +1,7 @@
 # <Hyper Bishi Bashwee>
 
 A two-player arcade game where players play a series of competitive minigames against each other.
+This is a branch created to work on the stretch goal.
 
 # Screenshots
 
