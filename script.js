@@ -10,9 +10,14 @@ const highScores = [
 
 //Player variables
 const players = [
-  { name: "player1", controls: ["KeyA", "KeyS", "KeyD"] },
+  {
+    name: "player1",
+    displayName: "Player 1",
+    controls: ["KeyA", "KeyS", "KeyD"],
+  },
   {
     name: "player2",
+    displayName: "Player 2",
     controls: ["ArrowLeft", "ArrowDown", "ArrowRight"],
   },
 ];
@@ -261,19 +266,31 @@ function clearBlocks(e) {
 }
 
 function checkForWin() {
-  if (player1Screen.innerHTML === "" || player2Screen.innerHTML === "") {
+  if (
+    players[0].gameScreen.innerHTML === "" ||
+    players[1].gameScreen.innerHTML === ""
+  ) {
     clearInterval(gameInterval);
     gameOverSound.play();
-    renderGameEndPage();
     checkHighScore(playerScore, highScores);
+
+    if (players[0].gameScreen.innerHTML === "") {
+      renderGameEndPage(players[0].displayName);
+    } else {
+      renderGameEndPage(players[1].displayName);
+    }
   }
 }
 
-function renderGameEndPage() {
+function renderGameEndPage(winnerName) {
   gamePage.style.display = "none";
   gameOverScreen.style.display = "block";
+
+  //Display winner
+  document.querySelector(".winning-player").innerText = `WINNER: ${winnerName}`;
+
+  //Display score
   playerScore = gameTimer / 100;
-  //TODO: refactor; display winner score
   document.querySelector(".score-display").innerHTML = playerScore.toFixed(2); //display timer to 2 decimal points;
 }
 
