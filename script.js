@@ -9,9 +9,19 @@ const highScores = [
 ];
 
 //Player variables
+const players = [
+  { name: "player1", score: 0, controls: ["KeyA", "KeyS", "KeyD"] },
+  {
+    name: "player2",
+    score: 0,
+    controls: ["ArrowLeft", "ArrowDown", "ArrowRight"],
+  },
+];
 let player1Score = 0;
-let player1Name = "";
+let highScoreNameInput = "";
 const player1Controls = ["KeyA", "KeyS", "KeyD"]; //Player 1's key controls.
+
+//TODO: Add player 2 controls
 
 /*----- Cached elements -----*/
 //Game variables
@@ -38,9 +48,19 @@ const gameTimerDisplay = document.querySelectorAll(".player-timer");
 const instructionPage = document.querySelector(".instructionpage");
 const gameScreenBody = document.querySelector(".game-body");
 const player1Screen = document.querySelector("#player-1-gamescreen");
-const playerControlDisplay = document.querySelector(".player-controls");
+const player2Screen = document.querySelector("#player-2-gamescreen");
+const player1ControlDisplay = document.querySelector(
+  "#player-1-control-display"
+);
+const player2ControlDisplay = document.querySelector(
+  "#player-2-control-display"
+);
 const darumaBlock = document.querySelector(".darumablock");
 const gameOverScreen = document.querySelector(".game-over-page");
+players[0].gameScreen = player1Screen;
+players[1].gameScreen = player2Screen;
+players[0].controlDisplay = player1ControlDisplay;
+players[1].controlDisplay = player2ControlDisplay;
 
 //Sound constructor
 function sound(src) {
@@ -57,6 +77,7 @@ function sound(src) {
     this.sound.pause();
   };
 }
+//TODO: Add player 2 sound
 const player1SuccessSound = new sound("./Assets/player1.wav");
 const errorSound = new sound("./Assets/error.wav");
 const highScoreSound = new sound("./Assets/victory.wav");
@@ -128,8 +149,9 @@ function playMiniGame() {
 function renderGame() {
   instructionPage.style.display = "none"; //hide current page
   gamePage.style.display = "block"; //render game page
-  renderStack(generateRandomStack(stackHeight)); //Randomly generate and display blocks
-  renderPlayerControls(player1Controls);
+  renderStack(generateRandomStack(stackHeight), players); //Randomly generate and display blocks
+  renderPlayerControls(players[0].controls, players[0].controlDisplay);
+  renderPlayerControls(players[1].controls, players[1].controlDisplay);
 }
 
 function generateRandomStack(stackHeight) {
@@ -141,29 +163,31 @@ function generateRandomStack(stackHeight) {
 }
 
 function renderStack(numArray) {
-  //for each item, generate a new block, assign color, and append to player's screen
-  for (let i = 0; i < numArray.length; i++) {
-    const newBlock = document.createElement("div");
-    newBlock.setAttribute("class", "daruma-block");
-    newBlock.setAttribute("value", numArray[i]);
+  players.forEach((player) => {
+    for (let i = 0; i < numArray.length; i++) {
+      const newBlock = document.createElement("div");
+      newBlock.setAttribute("class", "daruma-block");
+      newBlock.setAttribute("value", numArray[i]);
 
-    if (numArray[i] == 0) {
-      newBlock.style.backgroundColor = "red";
-      newBlock.innerText = "ʕ•́ᴥ•̀ʔ";
-    } else if (numArray[i] == 1) {
-      newBlock.style.backgroundColor = "green";
-      newBlock.innerText = "(◕ ‿ ◕)";
-    } else {
-      newBlock.style.backgroundColor = "blue";
-      newBlock.innerText = "(ಠ ‿ ಠ)";
+      if (numArray[i] == 0) {
+        newBlock.style.backgroundColor = "red";
+        newBlock.innerText = "ʕ•́ᴥ•̀ʔ";
+      } else if (numArray[i] == 1) {
+        newBlock.style.backgroundColor = "green";
+        newBlock.innerText = "(◕ ‿ ◕)";
+      } else {
+        newBlock.style.backgroundColor = "blue";
+        newBlock.innerText = "(ಠ ‿ ಠ)";
+      }
+      const playerScreen = player.gameScreen;
+      playerScreen.append(newBlock);
     }
-
-    player1Screen.append(newBlock);
-  }
+  });
 }
+//for each item, generate a new block, assign color, and append to player's screen
 
 //Render player's controls on game screen to guide player
-function renderPlayerControls(playerControlArray) {
+function renderPlayerControls(playerControlArray, playerControlDisplay) {
   playerControlDisplay.innerHTML = "";
   for (let i = 0; i < playerControlArray.length; i++) {
     const newBlock = document.createElement("div");
@@ -177,7 +201,16 @@ function renderPlayerControls(playerControlArray) {
       newBlock.style.backgroundColor = "blue";
     }
     //append to player's screen
-    newBlock.innerText = playerControlArray[i].charAt(3);
+    if (playerControlArray[i] === "ArrowDown") {
+      newBlock.innerText = "↑";
+    } else if (playerControlArray[i] === "ArrowLeft") {
+      newBlock.innerText = "←";
+    } else if (playerControlArray[i] === "ArrowRight") {
+      newBlock.innerText = "→";
+    } else {
+      newBlock.innerText = playerControlArray[i].charAt(3);
+    }
+
     playerControlDisplay.append(newBlock);
   }
 }
@@ -199,6 +232,7 @@ function playGame() {
 }
 
 function clearBlocks(e) {
+  //TODO: add player 2 gameplay
   if (player1Controls.includes(e.code)) {
     //detect valid key input
     if (
@@ -217,6 +251,7 @@ function clearBlocks(e) {
 }
 
 function checkForWin() {
+  //TODO: Add player 2
   if (player1Screen.innerHTML === "") {
     clearInterval(gameInterval);
     gameOverSound.play();
@@ -229,6 +264,7 @@ function renderGameEndPage() {
   gamePage.style.display = "none";
   gameOverScreen.style.display = "block";
   player1Score = gameTimer / 100;
+  //TODO: refactor; display winner score
   document.querySelector(".score-display").innerHTML = player1Score.toFixed(2); //display timer to 2 decimal points;
 }
 
@@ -236,9 +272,9 @@ function checkHighScore(currentScore, highScores) {
   const isNewHighScore = (highScores) => currentScore < highScores.score;
   if (highScores.some(isNewHighScore)) {
     highScoreSound.play();
-    player1Name = prompt("New high score! Enter your name:"); //Get player name
+    highScoreNameInput = prompt("New high score! Enter your name:"); //Get player name
     //Update high score table
-    highScores.push({ name: player1Name, score: currentScore });
+    highScores.push({ name: highScoreNameInput, score: currentScore });
     highScores.sort((a, b) => {
       return a.score - b.score;
     });
