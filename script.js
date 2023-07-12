@@ -7,8 +7,6 @@ const highScores = [
   { name: "Lian Kai", score: 8.0 },
   { name: "Chicken", score: 10.0 },
 ];
-
-//Player variables
 const players = [
   {
     name: "player1",
@@ -23,8 +21,6 @@ const players = [
 ];
 let winnerScore = 0;
 let highScoreNameInput = "";
-
-//TODO: Add player 2 controls
 
 /*----- Cached elements -----*/
 //Game variables
@@ -49,19 +45,25 @@ const gameTimerDisplay = document.querySelectorAll(".player-timer");
 
 //Minigame elements
 const instructionPage = document.querySelector(".instructionpage");
+const instructionPagePlayer1ControlDisplay = document.querySelector(
+  "#player-1-instructions-control-display"
+);
+const instructionPagePlayer2ControlDisplay = document.querySelector(
+  "#player-2-instructions-control-display"
+);
 const gameScreenBody = document.querySelector(".game-body");
 const player1Screen = document.querySelector("#player-1-gamescreen");
 const player2Screen = document.querySelector("#player-2-gamescreen");
-const player1ControlDisplay = document.querySelector(
-  "#player-1-control-display"
+const gameScreenPlayer1ControlDisplay = document.querySelector(
+  "#player-1-gamescreen-control-display"
 );
-const player2ControlDisplay = document.querySelector(
-  "#player-2-control-display"
+const gameScreenPlayer2ControlDisplay = document.querySelector(
+  "#player-2-gamescreen-control-display"
 );
 players[0].gameScreen = player1Screen;
 players[1].gameScreen = player2Screen;
-players[0].controlDisplay = player1ControlDisplay;
-players[1].controlDisplay = player2ControlDisplay;
+// players[0].controlDisplay = player1ControlDisplay;
+// players[1].controlDisplay = player2ControlDisplay;
 const darumaBlock = document.querySelector(".darumablock");
 const gameOverScreen = document.querySelector(".game-over-page");
 
@@ -80,7 +82,6 @@ function sound(src) {
     this.sound.pause();
   };
 }
-//TODO: Add player 2 sound
 const player1SuccessSound = new sound("./Assets/player1.wav");
 const player2SuccessSound = new sound("./Assets/player2.wav");
 const errorSound = new sound("./Assets/error.wav");
@@ -141,6 +142,15 @@ function renderHomepage() {
 function startGame() {
   homepage.style.display = "none"; //hide homepage
   instructionPage.style.display = "block"; //render instructions page
+  //show player controls
+  renderPlayerControls(
+    players[0].controls,
+    instructionPagePlayer1ControlDisplay
+  );
+  renderPlayerControls(
+    players[1].controls,
+    instructionPagePlayer2ControlDisplay
+  );
 }
 
 //Start mini game when player clicks "Start" after viewing instructions
@@ -155,10 +165,10 @@ function renderGame() {
   gamePage.style.display = "block"; //render game page
   players.forEach((player) => (player.gameScreen.innerHTML = ""));
   renderStack(generateRandomStack(stackHeight), players); //Randomly generate and display blocks
-  renderPlayerControls(players[0].controls, players[0].controlDisplay);
-  renderPlayerControls(players[1].controls, players[1].controlDisplay);
+  renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
+  renderPlayerControls(players[1].controls, gameScreenPlayer2ControlDisplay);
 }
-
+//generate array of random numbers
 function generateRandomStack(stackHeight) {
   let randomArray = [];
   for (let i = 0; i < stackHeight; i++) {
@@ -167,6 +177,7 @@ function generateRandomStack(stackHeight) {
   return randomArray;
 }
 
+//for each array item, generate a new block, assign color, and append to player's screen
 function renderStack(numArray) {
   players.forEach((player) => {
     for (let i = 0; i < numArray.length; i++) {
@@ -189,11 +200,11 @@ function renderStack(numArray) {
     }
   });
 }
-//for each item, generate a new block, assign color, and append to player's screen
 
 //Render player's controls on game screen to guide player
-function renderPlayerControls(playerControlArray, playerControlDisplay) {
-  playerControlDisplay.innerHTML = "";
+function renderPlayerControls(playerControlArray, displayLocation) {
+  console.log("player control function");
+  displayLocation.innerHTML = "";
   for (let i = 0; i < playerControlArray.length; i++) {
     const newBlock = document.createElement("div");
     newBlock.setAttribute("class", "player-control-key");
@@ -216,7 +227,7 @@ function renderPlayerControls(playerControlArray, playerControlDisplay) {
       newBlock.innerText = playerControlArray[i].charAt(3);
     }
 
-    playerControlDisplay.append(newBlock);
+    displayLocation.append(newBlock);
   }
 }
 
@@ -242,20 +253,20 @@ function clearBlocks(e) {
     if (
       //compare with bottommost block
       players[0].controls.indexOf(e.code) ===
-      parseInt(player1Screen.lastElementChild.getAttribute("value"))
+      parseInt(players[0].gameScreen.lastElementChild.getAttribute("value"))
     ) {
       player1SuccessSound.play();
-      player1Screen.lastElementChild.remove();
+      players[0].gameScreen.lastElementChild.remove();
     } else {
       errorSound.play();
     }
   } else if (players[1].controls.includes(e.code)) {
     if (
       players[1].controls.indexOf(e.code) ===
-      parseInt(player2Screen.lastElementChild.getAttribute("value"))
+      parseInt(players[1].gameScreen.lastElementChild.getAttribute("value"))
     ) {
       player2SuccessSound.play();
-      player2Screen.lastElementChild.remove();
+      players[1].gameScreen.lastElementChild.remove();
     } else {
       errorSound.play();
     }

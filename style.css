@@ -46,7 +46,7 @@ div {
   border-style: solid;
   border-radius: 5px;
   border-color: black;
-  height: 400px;
+  height: 300px;
 }
 
 #minigame-1-instruction-gif {
@@ -57,6 +57,12 @@ div {
 .instructions-body {
   flex-direction: row;
   align-items: center;
+}
+
+.instructions-controls {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
 }
 
 .gamepage {
@@ -104,10 +110,10 @@ div {
   display: flex;
   width: 200px;
   margin: 5px;
-  align-self: end;
 }
 
 .player-control-key {
+  color: white;
   border-style: solid;
   border-radius: 10px;
   border-color: white;
