@@ -62,7 +62,7 @@ v1.0.0 [First version][2]
 ## 12 Jul 2023 (Stretch goal)
 
 1. Add Player 2 - done
-2. Improve styling
+2. Add player keys to instructions page - done
 3. Use local storage to store high scores
 
    --v1.1.0 Complete--

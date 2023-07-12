@@ -43,26 +43,29 @@
         <span class="game-title">INSTRUCTIONS</span>
       </div>
       <div class="row instructions-body">
-        <div class="instructions-screenshot col-sm-6">
+        <div class="instructions-screenshot col-sm-4">
           <img src = "./Assets/minigame-1-instructions.gif" alt = "Video walkthrough of block game" id = "minigame-1-instruction-gif">
         </div>
-        <div class="instructions-text col-sm-6">
+        <div class="instructions-text col-sm-8">
           <p>Hit the same colour as that of the bottom block.</p>
           <p>Play for time.</p>
           <p><strong>The fastest player wins!</strong></p>
+
+          <div class ="row instructions-controls bg-light">
+            <div class = "col-sm-6">
+              PLAYER 1: BASH
+              <div class ="player-controls"id="player-1-instructions-control-display"></div>
+            </div>
+            <div class = "col-sm-6">
+              PLAYER 2: BASH
+              <div class ="player-controls"id="player-2-instructions-control-display"></div>
+            </div>       
+          </div>
         </div>
+
         
       </div>
-      <div class ="row instructions-controls bg-light">
-        <div class = "col-sm-6">
-          PLAYER 1: BASH
-          <div class ="player-controls"id="player-1-instructions-control-display"></div>
-        </div>
-        <div class = "col-sm-6">
-          PLAYER 2: BASH
-          <div class ="player-controls"id="player-2-instructions-control-display"></div>
-        </div>       
-      </div>
+
       <br/>
       <button type="button" class="btn btn-success" id="playminigame">
         Start!
