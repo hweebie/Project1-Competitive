@@ -21,10 +21,8 @@ const players = [
     controls: ["ArrowLeft", "ArrowDown", "ArrowRight"],
   },
 ];
-let playerScore = 0;
+let winnerScore = 0;
 let highScoreNameInput = "";
-const player1Controls = ["KeyA", "KeyS", "KeyD"];
-const player2Controls = ["ArrowLeft", "ArrowDown", "ArrowRight"];
 
 //TODO: Add player 2 controls
 
@@ -60,12 +58,12 @@ const player1ControlDisplay = document.querySelector(
 const player2ControlDisplay = document.querySelector(
   "#player-2-control-display"
 );
-const darumaBlock = document.querySelector(".darumablock");
-const gameOverScreen = document.querySelector(".game-over-page");
 players[0].gameScreen = player1Screen;
 players[1].gameScreen = player2Screen;
 players[0].controlDisplay = player1ControlDisplay;
 players[1].controlDisplay = player2ControlDisplay;
+const darumaBlock = document.querySelector(".darumablock");
+const gameOverScreen = document.querySelector(".game-over-page");
 
 //Sound constructor
 function sound(src) {
@@ -155,6 +153,7 @@ function playMiniGame() {
 function renderGame() {
   instructionPage.style.display = "none"; //hide current page
   gamePage.style.display = "block"; //render game page
+  players.forEach((player) => (player.gameScreen.innerHTML = ""));
   renderStack(generateRandomStack(stackHeight), players); //Randomly generate and display blocks
   renderPlayerControls(players[0].controls, players[0].controlDisplay);
   renderPlayerControls(players[1].controls, players[1].controlDisplay);
@@ -266,19 +265,23 @@ function clearBlocks(e) {
 }
 
 function checkForWin() {
+  let winner = "";
   if (
     players[0].gameScreen.innerHTML === "" ||
     players[1].gameScreen.innerHTML === ""
   ) {
     clearInterval(gameInterval);
     gameOverSound.play();
-    checkHighScore(playerScore, highScores);
 
     if (players[0].gameScreen.innerHTML === "") {
+      winner = players[0];
       renderGameEndPage(players[0].displayName);
     } else {
+      winner = players[1];
       renderGameEndPage(players[1].displayName);
     }
+
+    checkHighScore(winner, winnerScore, highScores);
   }
 }
 
@@ -290,15 +293,17 @@ function renderGameEndPage(winnerName) {
   document.querySelector(".winning-player").innerText = `WINNER: ${winnerName}`;
 
   //Display score
-  playerScore = gameTimer / 100;
-  document.querySelector(".score-display").innerHTML = playerScore.toFixed(2); //display timer to 2 decimal points;
+  winnerScore = gameTimer / 100;
+  document.querySelector(".score-display").innerHTML = winnerScore.toFixed(2); //display timer to 2 decimal points;
 }
 
-function checkHighScore(currentScore, highScores) {
+function checkHighScore(winner, currentScore, highScores) {
   const isNewHighScore = (highScores) => currentScore < highScores.score;
   if (highScores.some(isNewHighScore)) {
     highScoreSound.play();
-    highScoreNameInput = prompt("New high score! Enter your name:"); //Get player name
+    highScoreNameInput = prompt(
+      `${winner.displayName} wins! New high score! Enter your name:`
+    ); //Get player name
     //Update high score table
     highScores.push({ name: highScoreNameInput, score: currentScore });
     highScores.sort((a, b) => {
