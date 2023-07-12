@@ -4,7 +4,8 @@ A two-player arcade game where players play a series of competitive minigames ag
 
 # Screenshots
 
-<img src="./Assets/minigame-1-instructions.gif">
+<img src="./Assets/gameplay-instructions.gif">
+<img src="./Assets/gameplay.gif">
 
 # Technologies Used
 
@@ -25,10 +26,6 @@ A two-player arcade game where players play a series of competitive minigames ag
 # Version History
 
 v1.0.0 [First version][2]
-
-# Requirements and technical plan
-
-[Link to reqs]
 
 # Next Steps
 
