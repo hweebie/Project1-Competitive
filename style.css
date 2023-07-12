@@ -1,4 +1,5 @@
 body {
+  background: lightyellow;
   font-family: "Courier New", Courier, monospace;
   text-align: center;
   display: flex;
@@ -34,10 +35,6 @@ div {
 
 .score-display {
   font-size: 2em;
-}
-
-.high-score-message {
-  color: orange;
 }
 
 .game1instructionpage {
