@@ -12,21 +12,19 @@ const players = [
     name: "player1",
     displayName: "Player 1",
     controls: ["KeyA", "KeyS", "KeyD"],
+    winCount: 0,
   },
   {
     name: "player2",
     displayName: "Player 2",
     controls: ["ArrowLeft", "ArrowDown", "ArrowRight"],
+    winCount: 0,
   },
 ];
-let winnerScore = 0;
+let darumaWinnerScore = 0;
 let highScoreNameInput = "";
 
 /*----- Cached elements -----*/
-//Game variables
-const stackHeight = 20; // default stack height
-let gameTimer = null;
-let gameInterval = null;
 
 //Navigation buttons
 const homepageButtons = document.querySelector("#homepage-buttons");
@@ -42,7 +40,6 @@ const highScorePage = document.querySelector(".highscorepage");
 const highScoreTable = document.querySelector(".high-score-table");
 
 //Game page elements
-
 const gameTimerDisplay = document.querySelectorAll(".player-timer");
 const game1Page = document.querySelector(".game1page");
 const game1InstructionPage = document.querySelector(".game1instructionpage");
@@ -65,7 +62,10 @@ players[0].gameScreen = player1Screen;
 players[1].gameScreen = player2Screen;
 const gameOverScreen = document.querySelector(".game-over-page");
 
-//Daruma minigame elements
+//Daruma minigame variables
+const stackHeight = 1; // default stack height
+let gameTimer = null;
+let gameInterval = null;
 const darumaBlock = document.querySelector(".darumablock");
 
 //Sound constructor
@@ -286,13 +286,15 @@ function checkForWin() {
 
     if (players[0].gameScreen.innerHTML === "") {
       winner = players[0];
+      players[0].winCount = players[0].winCount + 1;
       renderGameEndPage(players[0].displayName);
     } else {
       winner = players[1];
+      players[1].winCount = players[1].winCount + 1;
       renderGameEndPage(players[1].displayName);
     }
 
-    checkHighScore(winner, winnerScore, highScores);
+    checkHighScore(winner, darumaWinnerScore, highScores);
   }
 }
 
@@ -303,9 +305,13 @@ function renderGameEndPage(winnerName) {
   //Display winner
   document.querySelector(".winning-player").innerText = `WINNER: ${winnerName}`;
 
-  //Display score
-  winnerScore = gameTimer / 100;
-  document.querySelector(".score-display").innerHTML = winnerScore.toFixed(2); //display timer to 2 decimal points;
+  //Display scores
+  darumaWinnerScore = gameTimer / 100;
+  document.querySelector(
+    ".game-score-display"
+  ).innerHTML = `Winner's Score: ${darumaWinnerScore.toFixed(2)} secs`;
+  document.querySelector("#player-1-win-count").innerHTML = players[0].winCount; //not working
+  document.querySelector("#player-2-win-count").innerHTML = players[1].winCount;
 }
 
 function checkHighScore(winner, currentScore, highScores) {
