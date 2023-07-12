@@ -47,7 +47,7 @@ const highScoreTable = document.querySelector(".high-score-table");
 const darumaBlock = document.querySelector(".darumablock");
 const gameTimerDisplay = document.querySelectorAll(".player-timer");
 const game1Page = document.querySelector(".game1page");
-const game1InstructionPage = document.querySelector(".game1instructionpage");
+const instructionPage = document.querySelector(".instructionpage");
 const instructionPagePlayer1ControlDisplay = document.querySelector(
   "#player-1-instructions-control-display"
 );
@@ -158,7 +158,7 @@ function renderHomepage() {
 //Render game instructions. Triggered by player clicking "Start"
 function renderGame1Instructions() {
   homepage.style.display = "none"; //hide homepage
-  game1InstructionPage.style.display = "block"; //render instructions page
+  instructionPage.style.display = "block"; //render instructions page
   renderPlayerControls(
     players[0].controls,
     instructionPagePlayer1ControlDisplay
@@ -177,7 +177,7 @@ function startGame1() {
 
 //Functions to render game 1 board
 function renderGame1() {
-  game1InstructionPage.style.display = "none"; //hide current page
+  instructionPage.style.display = "none"; //hide current page
   game1Page.style.display = "block"; //render game page
   players.forEach((player) => (player.gameScreen.innerHTML = ""));
   renderStack(generateRandomStack(stackHeight), players); //Randomly generate and display blocks
@@ -354,16 +354,16 @@ function loadHomepage() {
 //When player clicks "Play again", play same game again
 function replayGame1() {
   game1EndPage.style.display = "none";
-  game1InstructionPage.style.display = "block";
+  instructionPage.style.display = "block";
 }
 
 /*----- Game 2 functions -----*/
 
 //TODO: Build game 2 instructions
 function startNextGame() {
-  //Render next game's instructions
+  //Update page with Game 2 instructions
   game1EndPage.style.display = "none";
-  game1InstructionPage.style.display = "block";
+  instructionPage.style.display = "block";
   document.querySelector(".instructions-title").innerText =
     gameInstructions[1].title;
   document.querySelector(".instructions-screenshot").innerHTML =
@@ -379,7 +379,7 @@ function startNextGame() {
   startGame2Button.innerText = "Start!";
   startGame2Button.setAttribute("class", "btn btn-danger");
   startGame2Button.setAttribute("id", "playgame2");
-  game1InstructionPage.appendChild(startGame2Button);
+  instructionPage.appendChild(startGame2Button);
   startGame2Button.addEventListener("click", startGame2);
 }
 
@@ -390,7 +390,7 @@ function startGame2() {
 }
 //Render game 2 board
 function renderGame2() {
-  game1InstructionPage.style.display = "none"; //hide current page
+  instructionPage.style.display = "none"; //hide current page
   document.querySelector(".game2page").style.display = "block"; //render game page
 }
 function playGame2() {
