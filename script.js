@@ -36,15 +36,16 @@ const homeButton = document.querySelector(".home");
 const playMiniGameButton = document.querySelector("#playminigame");
 const playAgainButton = document.querySelector("#playagain");
 
-//Game elements
+//Landing page elements
 const homepage = document.querySelector(".homepage");
-const gamePage = document.querySelector(".gamepage");
 const highScorePage = document.querySelector(".highscorepage");
 const highScoreTable = document.querySelector(".high-score-table");
-const gameTimerDisplay = document.querySelectorAll(".player-timer");
 
-//Minigame elements
-const instructionPage = document.querySelector(".instructionpage");
+//Game page elements
+
+const gameTimerDisplay = document.querySelectorAll(".player-timer");
+const game1Page = document.querySelector(".game1page");
+const game1InstructionPage = document.querySelector(".game1instructionpage");
 const instructionPagePlayer1ControlDisplay = document.querySelector(
   "#player-1-instructions-control-display"
 );
@@ -62,10 +63,10 @@ const gameScreenPlayer2ControlDisplay = document.querySelector(
 );
 players[0].gameScreen = player1Screen;
 players[1].gameScreen = player2Screen;
-// players[0].controlDisplay = player1ControlDisplay;
-// players[1].controlDisplay = player2ControlDisplay;
-const darumaBlock = document.querySelector(".darumablock");
 const gameOverScreen = document.querySelector(".game-over-page");
+
+//Daruma minigame elements
+const darumaBlock = document.querySelector(".darumablock");
 
 //Sound constructor
 function sound(src) {
@@ -141,8 +142,7 @@ function renderHomepage() {
 //Render game instructions. Triggered by player clicking "Start"
 function startGame() {
   homepage.style.display = "none"; //hide homepage
-  instructionPage.style.display = "block"; //render instructions page
-  //show player controls
+  game1InstructionPage.style.display = "block"; //render instructions page
   renderPlayerControls(
     players[0].controls,
     instructionPagePlayer1ControlDisplay
@@ -161,8 +161,8 @@ function playMiniGame() {
 
 //Functions to render minigame board
 function renderGame() {
-  instructionPage.style.display = "none"; //hide current page
-  gamePage.style.display = "block"; //render game page
+  game1InstructionPage.style.display = "none"; //hide current page
+  game1Page.style.display = "block"; //render game page
   players.forEach((player) => (player.gameScreen.innerHTML = ""));
   renderStack(generateRandomStack(stackHeight), players); //Randomly generate and display blocks
   renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
@@ -297,7 +297,7 @@ function checkForWin() {
 }
 
 function renderGameEndPage(winnerName) {
-  gamePage.style.display = "none";
+  game1Page.style.display = "none";
   gameOverScreen.style.display = "block";
 
   //Display winner

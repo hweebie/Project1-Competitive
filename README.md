@@ -70,5 +70,6 @@ v1.0.0 [First version][2]
 
 ## 13 Jul 2023 (Stretch goal)
 
-1. Add one mini game
+1. Player can select game
+2. Styling
    --v1.2.0 Complete--
