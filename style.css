@@ -172,3 +172,7 @@ div {
 #player-2-win-count {
   font-size: 2em;
 }
+
+.game2page {
+  display: none;
+}

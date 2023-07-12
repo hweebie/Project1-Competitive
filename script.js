@@ -16,6 +16,16 @@ const players = [
   },
 ];
 
+const gameInstructions = [
+  {}, //TODO: add game 1 instructions
+  {
+    gameIndex: 1,
+    title: "KOPITIAM HERO",
+    imgHTML: "Image goes here",
+    text: "Prepare the orders correctly!",
+  },
+];
+
 /*----- Cached elements -----*/
 
 //Navigation buttons
@@ -345,15 +355,7 @@ function replayGame1() {
   game1InstructionPage.style.display = "block";
 }
 
-const gameInstructions = [
-  {},
-  {
-    gameIndex: 1,
-    title: "KOPITIAM HERO",
-    imgHTML: "Image goes here",
-    text: "Prepare the orders correctly!",
-  },
-];
+//---  GAME 2  ---
 
 //TODO: Build game 2 instruction skeleton
 function startNextGame() {
@@ -390,8 +392,8 @@ function startGame2() {
 }
 function renderGame2() {
   console.log("Render game 2");
-  // game1InstructionPage.style.display = "none"; //hide current page
-  // document.querySelector(".game2page").style.display = "block"; //render game page
+  game1InstructionPage.style.display = "none"; //hide current page
+  document.querySelector(".game2page").style.display = "block"; //render game page
   //TODO: Build game 2 page skeleton
 }
 
