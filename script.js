@@ -32,12 +32,13 @@ const homepage = document.querySelector(".homepage");
 const gamePage = document.querySelector(".gamepage");
 const highScorePage = document.querySelector(".highscorepage");
 const highScoreTable = document.querySelector(".high-score-table");
+const gameTimerDisplay = document.querySelectorAll(".player-timer");
 
 //Minigame elements
 const instructionPage = document.querySelector(".instructionpage");
 const gameScreenBody = document.querySelector(".game-body");
 const player1Screen = document.querySelector("#player-1-gamescreen");
-const playerControlDisplay = document.querySelector(".player-1-controls");
+const playerControlDisplay = document.querySelector(".player-controls");
 const darumaBlock = document.querySelector(".darumablock");
 const gameOverScreen = document.querySelector(".game-over-page");
 
@@ -115,7 +116,6 @@ function renderHomepage() {
 function startGame() {
   homepage.style.display = "none"; //hide homepage
   instructionPage.style.display = "block"; //render instructions page
-  renderPlayerControls(player1Controls);
 }
 
 //Start mini game when player clicks "Start" after viewing instructions
@@ -189,7 +189,9 @@ function playGame() {
   function incrementTimer() {
     gameTimer++;
     timerDisplay = gameTimer / 100;
-    document.querySelector(".player-timer").innerHTML = timerDisplay.toFixed(2); //display timer to 2 decimal points
+    gameTimerDisplay.forEach((timer) => {
+      timer.innerHTML = timerDisplay.toFixed(2);
+    }); //display timer to 2 decimal points
   }
 
   document.addEventListener("keydown", clearBlocks); //clear blocks if player enters right key
