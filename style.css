@@ -135,14 +135,10 @@ div {
 }
 
 .winning-message {
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 .game-score-display {
-  font-size: 2em;
-}
-
-.winning-player {
   font-size: 2em;
 }
 
@@ -151,6 +147,7 @@ div {
   border-style: solid;
   border-width: 2px;
   border-color: black;
+  border-radius: 10px;
   padding: 10px;
   color: white;
 }
@@ -159,6 +156,7 @@ div {
   border-style: solid;
   border-width: 2px;
   border-color: black;
+  border-radius: 10px;
   padding: 10px;
   color: white;
 }

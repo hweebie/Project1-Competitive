@@ -32,7 +32,7 @@ const startButton = document.querySelector(".start");
 const highScoreButton = document.querySelector(".highscore");
 const homeButton = document.querySelector(".home");
 const playMiniGameButton = document.querySelector("#playminigame");
-const playAgainButton = document.querySelector("#playagain");
+const restartButton = document.querySelector("#restart");
 
 //Landing page elements
 const homepage = document.querySelector(".homepage");
@@ -95,7 +95,7 @@ highScoreButton.addEventListener("click", renderHighScorePage);
 homeButton.addEventListener("click", renderHomepage);
 startButton.addEventListener("click", startGame);
 playMiniGameButton.addEventListener("click", playMiniGame);
-playAgainButton.addEventListener("click", playAgain);
+restartButton.addEventListener("click", restartGame);
 
 /*----- functions -----*/
 
@@ -331,7 +331,7 @@ function checkHighScore(winner, currentScore, highScores) {
 }
 
 //When player clicks "Play again", go back to homepage
-function playAgain() {
+function restartGame() {
   gameOverScreen.style.display = "none"; //hide gamepage
   document.querySelector(".homepage").style.display = "block"; //render homepage
 }
