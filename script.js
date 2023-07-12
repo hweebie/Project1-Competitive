@@ -111,7 +111,7 @@ gameEndHomeButton.addEventListener("click", loadHomepage);
 replayGame1Button.addEventListener("click", replayGame1);
 nextGameButton.addEventListener("click", startNextGame);
 
-/*----- functions -----*/
+/*----- Game functions -----*/
 
 //Render homepage
 function init() {
@@ -153,6 +153,8 @@ function renderHomepage() {
   homepage.style.display = "block"; //render high score page
 }
 
+/*----- Game 1 functions -----*/
+
 //Render game instructions. Triggered by player clicking "Start"
 function renderGame1Instructions() {
   homepage.style.display = "none"; //hide homepage
@@ -167,13 +169,13 @@ function renderGame1Instructions() {
   );
 }
 
-//Start mini game when player clicks "Start" after viewing instructions
+//Start game 1 when player clicks "Start" after viewing instructions
 function startGame1() {
   renderGame1();
   playGame1();
 }
 
-//Functions to render minigame board
+//Functions to render game 1 board
 function renderGame1() {
   game1InstructionPage.style.display = "none"; //hide current page
   game1Page.style.display = "block"; //render game page
@@ -355,15 +357,13 @@ function replayGame1() {
   game1InstructionPage.style.display = "block";
 }
 
-//---  GAME 2  ---
+/*----- Game 2 functions -----*/
 
-//TODO: Build game 2 instruction skeleton
+//TODO: Build game 2 instructions
 function startNextGame() {
-  console.log("Load next game's instructions");
-  game1EndPage.style.display = "none"; //hide gamepage
-  game1InstructionPage.style.display = "block"; //render instructions page
-
-  //render next game instructions
+  //Render next game's instructions
+  game1EndPage.style.display = "none";
+  game1InstructionPage.style.display = "block";
   document.querySelector(".instructions-title").innerText =
     gameInstructions[1].title;
   document.querySelector(".instructions-screenshot").innerHTML =
@@ -383,18 +383,19 @@ function startNextGame() {
   startGame2Button.addEventListener("click", startGame2);
 }
 
+//Start game 1 when player clicks "Start" after viewing instructions
 function startGame2() {
-  console.log("Start game 2");
-  //render game 2 page
-
   renderGame2();
-  //playGame2();
+  playGame2();
 }
+//Render game 2 board
 function renderGame2() {
-  console.log("Render game 2");
   game1InstructionPage.style.display = "none"; //hide current page
   document.querySelector(".game2page").style.display = "block"; //render game page
-  //TODO: Build game 2 page skeleton
+}
+function playGame2() {
+  console.log("Start game 2 logic");
+  //TODO: Build game 2 logic
 }
 
 /*----- main function -----*/
