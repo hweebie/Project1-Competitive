@@ -54,7 +54,7 @@ const playGame2Button = document.querySelector("#playgame2");
 const replayGame1Button = document.querySelector(".replaygame1");
 const nextGameButton = document.querySelector(".next-game");
 
-//Core pages and templates
+//Core pages and page templates (instructions, gamescreen, game end page)
 const homepage = document.querySelector(".homepage");
 const highScorePage = document.querySelector(".highscorepage");
 const highScoreTable = document.querySelector(".high-score-table");
@@ -113,10 +113,8 @@ const highScores = [
 let game1WinnerScore = 0;
 let highScoreNameInput = "";
 
-//Game 1 page elements
+//Game 1 game elements
 const gameTimerDisplay = document.querySelectorAll(".player-timer");
-const player1ScoreDisplayBox = document.querySelector(".player1-score-display");
-const player2ScoreDisplayBox = document.querySelector(".player2-score-display");
 
 //Game 2 variables
 const maxOrderPerItem = 4;
@@ -126,9 +124,10 @@ let player2Game2Score = 0;
 let orderArray = [];
 let player1Game2Input = [null, null, null];
 let player2Game2Input = [null, null, null];
-function compareArrays(a, b) {
-  return JSON.stringify(a) === JSON.stringify(b);
-}
+
+//Game 2 game elements
+const player1ScoreDisplayBox = document.querySelector(".player1-score-display");
+const player2ScoreDisplayBox = document.querySelector(".player2-score-display");
 
 /*----- event listeners -----*/
 
@@ -194,8 +193,6 @@ function renderHighScoreTable(highScores) {
   }
 }
 
-/*----- Game 1 functions -----*/
-
 //Render game instructions using game data
 function renderGameInstructions(currentPage, gameObject) {
   currentPage.style.display = "none"; //hide homepage
@@ -218,7 +215,7 @@ function renderGameInstructions(currentPage, gameObject) {
   }
 }
 
-//Render player's controls on game screen to guide player
+//Render player's controls based on chosen location in instructions and game screens
 function renderPlayerControls(playerObject, displayLocation) {
   displayLocation.innerHTML = `${playerObject.displayName} controls:`;
   for (let i = 0; i < playerObject.controls.length; i++) {
@@ -246,6 +243,16 @@ function renderPlayerControls(playerObject, displayLocation) {
     displayLocation.append(newBlock);
   }
 }
+
+function renderGameEndPage(winnerName) {
+  gamePage.style.display = "none";
+  gameEndPage.style.display = "block";
+  document.querySelector(".winning-player").innerText = `WINNER: ${winnerName}`; //Display winner
+  document.querySelector("#player-1-win-count").innerHTML = players[0].winCount; //Display scores
+  document.querySelector("#player-2-win-count").innerHTML = players[1].winCount;
+}
+
+/*----- Game 1 functions -----*/
 
 //Start game 1 when player clicks "Start" after viewing instructions
 function startGame1() {
@@ -313,6 +320,7 @@ function playGame1() {
   document.addEventListener("keydown", checkForGame1Win); //check whether player won
 }
 
+//Clear blocks based on players' input
 function clearBlocks(e) {
   if (players[0].controls.includes(e.code)) {
     //detect valid key input
@@ -364,14 +372,6 @@ function checkForGame1Win() {
   }
 }
 
-function renderGameEndPage(winnerName) {
-  gamePage.style.display = "none";
-  gameEndPage.style.display = "block";
-  document.querySelector(".winning-player").innerText = `WINNER: ${winnerName}`; //Display winner
-  document.querySelector("#player-1-win-count").innerHTML = players[0].winCount; //Display scores
-  document.querySelector("#player-2-win-count").innerHTML = players[1].winCount;
-}
-
 function checkHighScore(winner, currentScore, highScores) {
   const isNewHighScore = (highScores) => currentScore < highScores.score;
   if (highScores.some(isNewHighScore)) {
@@ -399,50 +399,7 @@ function startGame2() {
   document.addEventListener("keydown", checkforGame2Win); //Game ends when one player wins 3 rounds
 }
 
-function startNewOrder(e) {
-  if (e.code === "Space") {
-    //Reset screen
-    players.forEach((player) => {
-      player.gameScreen.innerHTML = ""; //clear previous screen
-      player.gameScreen.setAttribute("class", "row player-gamescreen"); //render 3 columns on each player's screen
-      player.gameScreen.innerHTML = `<div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-0"></div>
-      <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-1"></div>
-      <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-2"></div>`;
-    });
-    //Reset order array
-    orderArray = generateOrderArray(maxOrderPerItem); //Generate order array - generate array of 3 random numbers
-    renderOrder(orderArray); //Render pending orders on game screen
-    //Reset player input arrays
-    player1Game2Input = [null, null, null];
-    player2Game2Input = [null, null, null];
-
-    document.addEventListener("keydown", serveItem); //record player's keys
-    document.addEventListener("keydown", checkOrder); //check whether player served right order
-  }
-}
-
-function checkforGame2Win() {
-  //Game ends when one player wins 3 times
-  if (player1Game2Score == 3 || player2Game2Score == 3) {
-    //end game
-    gameOverSound.play();
-    document.removeEventListener("keydown", checkforGame2Win);
-    //update winner
-    if (player1Game2Score == 3) {
-      winner = players[0];
-      players[0].winCount = players[0].winCount + 1;
-      renderGameEndPage(players[0].displayName);
-      nextGameButton.style.display = "none";
-    } else {
-      winner = players[1];
-      players[1].winCount = players[1].winCount + 1;
-      renderGameEndPage(players[1].displayName);
-      nextGameButton.style.display = "none";
-    }
-  }
-}
-
-//Render game 2 board
+//Render game 2
 function renderGame2() {
   instructionPage.style.display = "none"; //hide current page
   gamePage.style.display = "block"; //render game page
@@ -467,6 +424,62 @@ function renderGame2() {
   renderPlayerControls(players[1], gameScreenPlayer2ControlDisplay);
 }
 
+//Start new round when players press space bar
+function startNewOrder(e) {
+  if (e.code === "Space") {
+    //Reset screen
+    players.forEach((player) => {
+      player.gameScreen.innerHTML = ""; //clear previous screen
+      player.gameScreen.setAttribute("class", "row player-gamescreen"); //render 3 columns on each player's screen
+      player.gameScreen.innerHTML = `<div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-0"></div>
+      <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-1"></div>
+      <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-2"></div>`;
+    });
+    //Reset order array
+    orderArray = generateOrderArray(maxOrderPerItem); //Generate order array - generate array of 3 random numbers
+    renderOrder(orderArray); //Render pending orders on game screen
+    //Reset player input arrays
+    player1Game2Input = [null, null, null];
+    player2Game2Input = [null, null, null];
+
+    document.addEventListener("keydown", serveItem); //record player's keys
+    document.addEventListener("keydown", checkOrder); //check whether player served right order
+  }
+}
+
+//Generate array of random numbers
+function generateOrderArray(maxOrderPerItem) {
+  let randomArray = [];
+  for (let i = 0; i < 3; i++) {
+    randomArray[i] = Math.ceil(Math.random() * maxOrderPerItem);
+  }
+  return randomArray;
+}
+
+function renderOrder(orderArray) {
+  players.forEach((player) => {
+    for (let i = 0; i < orderArray.length; i++) {
+      const playerScreenCol = player.gameScreen.children[i];
+      for (let j = 0; j < orderArray[i]; j++) {
+        const newPendingOrderItem = document.createElement("div");
+        newPendingOrderItem.setAttribute("class", "pending-order");
+        newPendingOrderItem.setAttribute("value", i); //assign index as item value
+
+        if (i == 0) {
+          //style item based on index
+          newPendingOrderItem.style.borderColor = "red";
+        } else if (i == 1) {
+          newPendingOrderItem.style.borderColor = "green";
+        } else {
+          newPendingOrderItem.style.borderColor = "blue";
+        }
+        playerScreenCol.append(newPendingOrderItem);
+      }
+    }
+  });
+}
+
+//Log players' inputs and update UI
 function serveItem(e) {
   if (players[0].controls.includes(e.code)) {
     //detect valid key input from player 1
@@ -547,6 +560,7 @@ function serveItem(e) {
   }
 }
 
+//Check whether any player fulfilled order
 function checkOrder(e) {
   if (
     players[0].controls.includes(e.code) ||
@@ -564,36 +578,29 @@ function checkOrder(e) {
   }
 }
 
-//generate array of random numbers
-function generateOrderArray(maxOrderPerItem) {
-  let randomArray = [];
-  for (let i = 0; i < 3; i++) {
-    randomArray[i] = Math.ceil(Math.random() * maxOrderPerItem);
-  }
-  return randomArray;
+function compareArrays(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
 }
 
-function renderOrder(orderArray) {
-  players.forEach((player) => {
-    for (let i = 0; i < orderArray.length; i++) {
-      const playerScreenCol = player.gameScreen.children[i];
-      for (let j = 0; j < orderArray[i]; j++) {
-        const newPendingOrderItem = document.createElement("div");
-        newPendingOrderItem.setAttribute("class", "pending-order");
-        newPendingOrderItem.setAttribute("value", i); //assign index as item value
-
-        if (i == 0) {
-          //style item based on index
-          newPendingOrderItem.style.borderColor = "red";
-        } else if (i == 1) {
-          newPendingOrderItem.style.borderColor = "green";
-        } else {
-          newPendingOrderItem.style.borderColor = "blue";
-        }
-        playerScreenCol.append(newPendingOrderItem);
-      }
+function checkforGame2Win() {
+  //Game ends when one player wins 3 times
+  if (player1Game2Score == 3 || player2Game2Score == 3) {
+    //end game
+    gameOverSound.play();
+    document.removeEventListener("keydown", checkforGame2Win);
+    //update winner
+    if (player1Game2Score == 3) {
+      winner = players[0];
+      players[0].winCount = players[0].winCount + 1;
+      renderGameEndPage(players[0].displayName);
+      nextGameButton.style.display = "none";
+    } else {
+      winner = players[1];
+      players[1].winCount = players[1].winCount + 1;
+      renderGameEndPage(players[1].displayName);
+      nextGameButton.style.display = "none";
     }
-  });
+  }
 }
 
 /*----- main function -----*/
