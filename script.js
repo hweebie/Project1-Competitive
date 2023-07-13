@@ -51,8 +51,8 @@ const highScoreTable = document.querySelector(".high-score-table");
 //Game 1 page elements
 const darumaBlock = document.querySelector(".darumablock");
 const gameTimerDisplay = document.querySelectorAll(".player-timer");
-const player1ScoreDisplay = document.querySelector(".player1-score-display");
-const player2ScoreDisplay = document.querySelector(".player2-score-display");
+const player1ScoreDisplayBox = document.querySelector(".player1-score-display");
+const player2ScoreDisplayBox = document.querySelector(".player2-score-display");
 const gamePage = document.querySelector(".gamepage");
 const instructionPage = document.querySelector(".instructionpage");
 const instructionPagePlayer1ControlDisplay = document.querySelector(
@@ -89,8 +89,15 @@ let highScoreNameInput = "";
 
 //Game 2 variables
 const maxOrderPerItem = 4;
-const player1Score = document.querySelector("#player1-score");
-const player2Score = document.querySelector("#player2-score");
+const maxGame2Rounds = 6;
+let player1Game2Score = 0;
+let player2Game2Score = 0;
+let orderArray = [];
+let player1Game2Input = [null, null, null];
+let player2Game2Input = [null, null, null];
+function compareArrays(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
 
 //Sound constructor
 function sound(src) {
@@ -407,7 +414,37 @@ function renderGame2Instructions() {
 //Start game 1 when player clicks "Start" after viewing instructions
 function startGame2() {
   renderGame2();
-  playGame2();
+
+  //if no one has won 3 rounds, play another round
+  document.addEventListener("keydown", startNewOrder);
+
+  document.addEventListener("keydown", checkforGame2Win);
+}
+
+function startNewOrder(e) {
+  if (e.code === "Space") {
+    //Reset screen
+    players.forEach((player) => {
+      player.gameScreen.innerHTML = ""; //clear previous screen
+      player.gameScreen.setAttribute("class", "row player-gamescreen"); //render 3 columns on each player's screen
+      player.gameScreen.innerHTML = `<div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-0"></div>
+      <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-1"></div>
+      <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-2"></div>`;
+    });
+    //Reset order array
+    orderArray = generateOrderArray(maxOrderPerItem); //Generate order array - generate array of 3 random numbers
+    renderOrder(orderArray); //Render pending orders on game screen
+    //Reset player input arrays
+    player1Game2Input = [null, null, null];
+    player2Game2Input = [null, null, null];
+
+    document.addEventListener("keydown", serveItem); //clear blocks if player enters right key
+    document.addEventListener("keydown", checkOrder); //TODO: if win, go to next round
+  }
+}
+
+function checkforGame2Win() {
+  //Game ends when one player wins 3 times
 }
 
 //Render game 2 board
@@ -425,31 +462,10 @@ function renderGame2() {
     <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-2"></div>`;
   });
   //render footer
-  player1ScoreDisplay.innerHTML = `Orders won:    <span id="player1-score">0</span><br /><br />`;
-  player2ScoreDisplay.innerHTML = `Orders won:    <span id="player2-score">0</span><br /><br />`;
+  player1ScoreDisplayBox.innerHTML = `Orders won:    <span id="player1-score">0</span><br /><br />`;
+  player2ScoreDisplayBox.innerHTML = `Orders won:    <span id="player2-score">0</span><br /><br />`;
   renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
   renderPlayerControls(players[1].controls, gameScreenPlayer2ControlDisplay);
-}
-function playGame2() {
-  //For each round
-  orderArray = generateOrderArray(maxOrderPerItem); //Generate order array - generate array of 3 random numbers
-  console.log("Orders:" + orderArray);
-  renderOrder(orderArray); //Render pending orders on game screen
-  document.addEventListener("keydown", serveItem); //clear blocks if player enters right key
-  document.addEventListener("keydown", checkOrder); //TODO: if win, go to next round
-
-  //TODO: When a player's score hits 3, game ends
-  document.addEventListener("keydown", checkForGame2Win);
-}
-
-//Create empty arrays for player input
-let orderArray = [];
-let player1Game2Score = 0;
-let player2Game2Score = 0;
-let player1Game2Input = [0, 0, 0];
-let player2Game2Input = [0, 0, 0];
-function compareArrays(a, b) {
-  return JSON.stringify(a) === JSON.stringify(b);
 }
 
 function serveItem(e) {
@@ -457,7 +473,8 @@ function serveItem(e) {
     //detect valid key input from player 1
     player1SuccessSound.play();
     if (players[0].controls.indexOf(e.code) == 0) {
-      //If valid, add input to array TODO: render on UI
+      //If valid, add input to array
+      //TODO: render order on UI
       player1Game2Input[0] = player1Game2Input[0] + 1;
     } else if (players[0].controls.indexOf(e.code) == 1) {
       player1Game2Input[1] = player1Game2Input[1] + 1;
@@ -480,20 +497,20 @@ function serveItem(e) {
 }
 
 function checkOrder(e) {
-  if (compareArrays(orderArray, player1Game2Input)) {
-    console.log("Player 1 Wins");
-    player1Game2Score++;
-    document.querySelector("#player1-score").innerText = player1Game2Score;
-  } else if (compareArrays(orderArray, player2Game2Input)) {
-    console.log("Player 2 Wins");
-    player2Game2Score++;
-    document.querySelector("#player2-score").innerText = player2Game2Score;
+  if (
+    players[0].controls.includes(e.code) ||
+    players[1].controls.includes(e.code)
+  ) {
+    if (compareArrays(orderArray, player1Game2Input)) {
+      console.log("Player 1 Wins");
+      player1Game2Score++;
+      document.querySelector("#player1-score").innerText = player1Game2Score;
+    } else if (compareArrays(orderArray, player2Game2Input)) {
+      console.log("Player 2 Wins");
+      player2Game2Score++;
+      document.querySelector("#player2-score").innerText = player2Game2Score;
+    }
   }
-  //TODO: For each ordered item, if playerinputcount > numberordered, show fail message
-  //Round ends when 1) any player completed round 2) all players lost
-}
-function checkForGame2Win(e) {
-  //Placeholder for win check
 }
 
 //generate array of random numbers
