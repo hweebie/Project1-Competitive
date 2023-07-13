@@ -51,7 +51,7 @@ const highScoreTable = document.querySelector(".high-score-table");
 //Game 1 page elements
 const darumaBlock = document.querySelector(".darumablock");
 const gameTimerDisplay = document.querySelectorAll(".player-timer");
-const game1Page = document.querySelector(".game1page");
+const gamePage = document.querySelector(".gamepage");
 const instructionPage = document.querySelector(".instructionpage");
 const instructionPagePlayer1ControlDisplay = document.querySelector(
   "#player-1-instructions-control-display"
@@ -183,7 +183,7 @@ function startGame1() {
 //Functions to render game 1 board
 function renderGame1() {
   instructionPage.style.display = "none"; //hide current page
-  game1Page.style.display = "block"; //render game page
+  gamePage.style.display = "block"; //render game page
   players.forEach((player) => (player.gameScreen.innerHTML = ""));
   renderStack(generateRandomStack(stackHeight), players); //Randomly generate and display blocks
   renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
@@ -320,7 +320,7 @@ function checkForWin() {
 }
 
 function renderGameEndPage(winnerName) {
-  game1Page.style.display = "none";
+  gamePage.style.display = "none";
   game1EndPage.style.display = "block";
 
   //Display winner
@@ -407,7 +407,15 @@ function startGame2() {
 //Render game 2 board
 function renderGame2() {
   instructionPage.style.display = "none"; //hide current page
-  document.querySelector(".game2page").style.display = "block"; //render game page
+  gamePage.style.display = "block"; //render game page
+  document.querySelector(".gamepage-title").innerText =
+    gameInstructions[1].title; //render game title
+
+  players.forEach((player) => (player.gameScreen.innerHTML = "")); //clear game screen
+  
+  //render game divs
+  renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
+  renderPlayerControls(players[1].controls, gameScreenPlayer2ControlDisplay);
 }
 function playGame2() {
   console.log("Start game 2 logic");
@@ -415,8 +423,9 @@ function playGame2() {
   //For each round
   //Generate order array - generate array of 3 random numbers
   let orderArray = generateOrderArray(maxOrderPerItem);
-  console.log(orderArray);
+  console.log("Orders:" + orderArray);
   //Render orderitems on gamescreen
+  renderOrder(orderArray);
   //Players can play
   //On key press, add player's input to player input array and render on gamescreen
   //For each ordered item, if playerinputcount > numberordered, show fail message
@@ -435,6 +444,10 @@ function generateOrderArray(maxOrderPerItem) {
     randomArray[i] = Math.ceil(Math.random() * maxOrderPerItem);
   }
   return randomArray;
+}
+
+function renderOrder(orderArray) {
+  console.log("render order");
 }
 /*----- main function -----*/
 init();
