@@ -78,4 +78,7 @@ v1.0.0 [First version][2]
 
 1. Add 1 mini game - done
 2. Improve styling - done
+3. Allow game replays when game over - done
+4. Refactor code to reuse page templates and functions - done
+5. Re-initialise game when final game ended
    --v1.2.0 Complete--

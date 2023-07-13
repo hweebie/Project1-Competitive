@@ -107,8 +107,8 @@ let gameInterval = null;
 const highScores = [
   // default high scores
   { name: "Desmond", score: 5 },
-  { name: "Lian Kai", score: 8 },
-  { name: "Chicken", score: 10 },
+  { name: "Lian Kai", score: 6 },
+  { name: "Chicken", score: 20 },
 ];
 let game1WinnerScore = 0;
 let highScoreNameInput = "";
@@ -260,7 +260,7 @@ function startGame1() {
   playGame1();
 }
 
-//Functions to render game 1 board
+//Functions to render game board
 function renderGame1() {
   instructionPage.style.display = "none"; //hide current page
   gamePage.style.display = "block"; //render game page
@@ -271,7 +271,7 @@ function renderGame1() {
   renderPlayerControls(players[0], gameScreenPlayer1ControlDisplay);
   renderPlayerControls(players[1], gameScreenPlayer2ControlDisplay);
 }
-//generate array of random numbers
+//Generate random array of numbers to represent random stack of blocks. Follows stack height config
 function generateRandomStack(stackHeight) {
   let randomArray = [];
   for (let i = 0; i < stackHeight; i++) {
@@ -280,7 +280,7 @@ function generateRandomStack(stackHeight) {
   return randomArray;
 }
 
-//for each array item, generate a new block, assign color, and append to player's screen
+//Render blocks based on random array and append to player's screen
 function renderStack(numArray) {
   players.forEach((player) => {
     for (let i = 0; i < numArray.length; i++) {
@@ -447,7 +447,7 @@ function startNewOrder(e) {
   }
 }
 
-//Generate array of random numbers
+//Generate array of random numbers to represent pending orders. Each item adheres to max order config
 function generateOrderArray(maxOrderPerItem) {
   let randomArray = [];
   for (let i = 0; i < 3; i++) {
@@ -456,6 +456,7 @@ function generateOrderArray(maxOrderPerItem) {
   return randomArray;
 }
 
+//Render pending orders on players's screen based on array of random numbers
 function renderOrder(orderArray) {
   players.forEach((player) => {
     for (let i = 0; i < orderArray.length; i++) {

@@ -147,7 +147,8 @@ div {
 }
 
 .player-controls {
-  font-size: 0.7em;
+  color: black;
+  font-size: 0.8em;
   background-color: darkgrey;
   border-style: solid;
   border-radius: 10px;
