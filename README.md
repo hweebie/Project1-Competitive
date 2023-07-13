@@ -30,9 +30,9 @@ Sample Game 2
 
 # Version History
 
-[v1.2.0][2] Add 2nd mini game
-[v1.1.0][3] Introduce competitive gameplay
-[v1.0.0][4] First version
+- [v1.2.0][2] Add 2nd mini game
+- [v1.1.0][3] Introduce competitive gameplay
+- [v1.0.0][4] First version
 
 [2]: https://hyperbishibashwee2.netlify.app
 [3]: https://hyperbishibashwee1.netlify.app/
@@ -75,7 +75,8 @@ Sample Game 2
 5. Add instruction GIF - done
 6. Add sound effects - done
 7. Add negative case handling - done
-   ###V1.0.0 Complete
+
+   --MVP Complete--
 
 ## 12 Jul 2023 (Stretch goal)
 
@@ -91,4 +92,5 @@ Sample Game 2
 2. Improve styling - done
 3. Allow game replays when game over - done
 4. Refactor code to reuse page templates and functions - done
+
    --v1.2.0 Complete--
