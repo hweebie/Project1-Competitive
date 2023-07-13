@@ -26,7 +26,11 @@ const gameInstructions = [
   {
     gameIndex: 2,
     title: "KOPITIAM HERO",
-    imgHTML: "Image goes here",
+    imgHTML: `<img
+    src="./Assets/minigame-2-instructions.gif"
+    alt="Image showing game walkthrough"
+    id="instructions-image"
+  />`,
     text: "Press the buttons to match each order. <br/><br/>Too many items will spoil your job.<br/><br/><strong>Compete for time! Get 3 points to win.</strong>",
   },
 ];
