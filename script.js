@@ -250,6 +250,7 @@ function renderGameEndPage(winnerName) {
   gamePage.style.display = "none";
   gameEndPage.style.display = "block";
   document.querySelector(".winning-player").innerText = `WINNER: ${winnerName}`; //Display winner
+  game1WinnerScore = gameTimer / 100;
   document.querySelector("#player-1-win-count").innerHTML = players[0].winCount; //Display scores
   document.querySelector("#player-2-win-count").innerHTML = players[1].winCount;
 }
