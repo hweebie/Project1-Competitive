@@ -136,11 +136,15 @@ const orderSuccessSound = new sound("./Assets/successfulorder.wav");
 
 highScoreButton.addEventListener("click", renderHighScorePage);
 homeButton.addEventListener("click", renderHomepage);
-startButton.addEventListener("click", renderGame1Instructions);
+startButton.addEventListener("click", () =>
+  renderGameInstructions(homepage, gameInstructions[0])
+); //render game 1 instructions
 playGame1Button.addEventListener("click", startGame1);
 gameEndHomeButton.addEventListener("click", loadHomepage);
 replayGame1Button.addEventListener("click", replayGame1);
-nextGameButton.addEventListener("click", renderGame2Instructions);
+nextGameButton.addEventListener("click", () =>
+  renderGameInstructions(game1EndPage, gameInstructions[1])
+); //render game 2 instructions
 
 /*----- Game functions -----*/
 
@@ -187,15 +191,13 @@ function renderHomepage() {
 /*----- Game 1 functions -----*/
 
 //Render game instructions. Triggered by player clicking "Start"
-function renderGame1Instructions() {
-  homepage.style.display = "none"; //hide homepage
+function renderGameInstructions(currentPage, gameObject) {
+  currentPage.style.display = "none"; //hide homepage
   instructionPage.style.display = "block"; //render instructions page
-  document.querySelector(".instructions-title").innerText =
-    gameInstructions[0].title;
+  document.querySelector(".instructions-title").innerText = gameObject.title;
   document.querySelector(".instructions-screenshot").innerHTML =
-    gameInstructions[0].imgHTML;
-  document.querySelector(".instructions-text").innerHTML =
-    gameInstructions[0].text;
+    gameObject.imgHTML;
+  document.querySelector(".instructions-text").innerHTML = gameObject.text;
 
   renderPlayerControls(
     players[0].controls,
