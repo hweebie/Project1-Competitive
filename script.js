@@ -410,13 +410,13 @@ function renderGame2() {
   gamePage.style.display = "block"; //render game page
   document.querySelector(".gamepage-title").innerText =
     gameInstructions[1].title; //render game title
-    
+
   players.forEach((player) => {
     player.gameScreen.innerHTML = ""; //clear game screen
     player.gameScreen.setAttribute("class", "row player-gamescreen"); //render 3 columns on each player's screen
-    player.gameScreen.innerHTML = `<div class="col-sm-4 player-gamescreen-col" id="${player.name}-gamescreen-col-1"></div>
-    <div class="col-sm-4 player-gamescreen-col" id="${player.name}-gamescreen-col-2"></div>
-    <div class="col-sm-4 player-gamescreen-col" id="${player.name}-gamescreen-col-3"></div>`;
+    player.gameScreen.innerHTML = `<div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-0"></div>
+    <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-1"></div>
+    <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-2"></div>`;
   });
   //render player controls
   renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
@@ -424,9 +424,9 @@ function renderGame2() {
 }
 function playGame2() {
   console.log("Start game 2 logic");
-
   //For each round
   //Generate order array - generate array of 3 random numbers
+
   let orderArray = generateOrderArray(maxOrderPerItem);
   console.log("Orders:" + orderArray);
   //Render orderitems on gamescreen
@@ -453,6 +453,51 @@ function generateOrderArray(maxOrderPerItem) {
 
 function renderOrder(orderArray) {
   console.log("render order");
+  players.forEach((player) => {
+    for (let i = 0; i < orderArray.length; i++) {
+      const playerScreenCol = player.gameScreen.children[i];
+      for (let j = 0; j < orderArray[i]; j++) {
+        const newPendingOrderItem = document.createElement("div");
+        newPendingOrderItem.setAttribute("class", "pending-order");
+        newPendingOrderItem.setAttribute("value", i); //assign index as item value
+
+        if (i == 0) {
+          //style item based on index
+          newPendingOrderItem.style.backgroundColor = "red";
+        } else if (i == 1) {
+          newPendingOrderItem.style.backgroundColor = "green";
+        } else {
+          newPendingOrderItem.style.backgroundColor = "blue";
+        }
+        playerScreenCol.append(newPendingOrderItem);
+      }
+    }
+  });
 }
+
+// //for each array item, generate a new block, assign color, and append to player's screen
+// function renderStack(numArray) {
+//   players.forEach((player) => {
+//     for (let i = 0; i < numArray.length; i++) {
+//       const newBlock = document.createElement("div");
+//       newBlock.setAttribute("class", "daruma-block");
+//       newBlock.setAttribute("value", numArray[i]);
+
+//       if (numArray[i] == 0) {
+//         newBlock.style.backgroundColor = "red";
+//         newBlock.innerText = "ʕ•́ᴥ•̀ʔ";
+//       } else if (numArray[i] == 1) {
+//         newBlock.style.backgroundColor = "green";
+//         newBlock.innerText = "(◕ ‿ ◕)";
+//       } else {
+//         newBlock.style.backgroundColor = "blue";
+//         newBlock.innerText = "(ಠ ‿ ಠ)";
+//       }
+//       const playerScreen = player.gameScreen;
+//       playerScreen.append(newBlock);
+//     }
+//   });
+// }
+
 /*----- main function -----*/
 init();
