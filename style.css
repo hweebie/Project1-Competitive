@@ -119,16 +119,19 @@ div {
 }
 .pending-order {
   height: 40px;
-  width: 40px;
   border-style: solid;
   border-radius: 10px;
   border-color: black;
+  width: 40px;
   margin: 1px auto;
 }
 .player-timer {
   font-size: 1.5em;
 }
-
+.player-score-display {
+  display: block;
+  font-size: 1.5em;
+}
 .player-controls {
   font-size: 0.7em;
   background-color: darkgrey;

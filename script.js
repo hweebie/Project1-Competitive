@@ -51,6 +51,7 @@ const highScoreTable = document.querySelector(".high-score-table");
 //Game 1 page elements
 const darumaBlock = document.querySelector(".darumablock");
 const gameTimerDisplay = document.querySelectorAll(".player-timer");
+const scoreDisplay = document.querySelectorAll(".player-score-display");
 const gamePage = document.querySelector(".gamepage");
 const instructionPage = document.querySelector(".instructionpage");
 const instructionPagePlayer1ControlDisplay = document.querySelector(
@@ -84,6 +85,9 @@ const highScores = [
 ];
 let game1WinnerScore = 0;
 let highScoreNameInput = "";
+
+//Game 2 variables
+const maxOrderPerItem = 4;
 
 //Sound constructor
 function sound(src) {
@@ -186,6 +190,8 @@ function renderGame1() {
   gamePage.style.display = "block"; //render game page
   players.forEach((player) => (player.gameScreen.innerHTML = ""));
   renderStack(generateRandomStack(stackHeight), players); //Randomly generate and display blocks
+
+  //Render footer
   renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
   renderPlayerControls(players[1].controls, gameScreenPlayer2ControlDisplay);
 }
@@ -418,7 +424,10 @@ function renderGame2() {
     <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-1"></div>
     <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-2"></div>`;
   });
-  //render player controls
+  //render footer
+  scoreDisplay.forEach((player) => {
+    player.innerHTML = `Orders:    <span class="player-score">0</span><br /><br />`;
+  }); //show score for each player
   renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
   renderPlayerControls(players[1].controls, gameScreenPlayer2ControlDisplay);
 }
@@ -429,8 +438,12 @@ function playGame2() {
   console.log("Orders:" + orderArray);
   renderOrder(orderArray); //Render pending orders on game screen
   //Players can play
+  document.addEventListener("keydown", serveItem); //clear blocks if player enters right key
+
   //On key press, add player's input to player input array and render on gamescreen
   //For each ordered item, if playerinputcount > numberordered, show fail message
+
+  //document.addEventListener("keydown", checkforWin); //check whether player won
   //If allplayerinputs === ordered items, show success message and log time
   //If player was the first, player's gameScore +1
   //Round ends when 1) any player completed round 2) all players lost
@@ -439,7 +452,10 @@ function playGame2() {
   //If win, show win message
 }
 
-let maxOrderPerItem = 4;
+function serveItem(e) {
+  console.log("Key pressed:" + e.code);
+}
+
 //generate array of random numbers
 function generateOrderArray(maxOrderPerItem) {
   let randomArray = [];
