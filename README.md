@@ -26,7 +26,7 @@ Sample Game 2
 
 [Click to Play Hyper Bishi Bashwee!][1]
 
-[1]: https://hyperbishibashwee0.netlify.app/
+[1]: https://hyperbishibashwee2.netlify.app/
 
 # Version History
 
