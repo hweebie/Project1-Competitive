@@ -437,23 +437,26 @@ function playGame2() {
   let orderArray = generateOrderArray(maxOrderPerItem); //Generate order array - generate array of 3 random numbers
   console.log("Orders:" + orderArray);
   renderOrder(orderArray); //Render pending orders on game screen
-  //Players can play
   document.addEventListener("keydown", serveItem); //clear blocks if player enters right key
+  document.addEventListener("keydown", checkOrder);
 
-  //On key press, add player's input to player input array and render on gamescreen
-  //For each ordered item, if playerinputcount > numberordered, show fail message
-
-  //document.addEventListener("keydown", checkforWin); //check whether player won
-  //If allplayerinputs === ordered items, show success message and log time
-  //If player was the first, player's gameScore +1
-  //Round ends when 1) any player completed round 2) all players lost
-
-  //Check for win - player gameScore ==3
-  //If win, show win message
+  //After each round ends, check for win
+  document.addEventListener("keydown", checkForGame2Win);
 }
 
 function serveItem(e) {
   console.log("Key pressed:" + e.code);
+  //Check for valid key press
+  //If valid, add player's input to player input array and render on gamescreen
+}
+function checkOrder(e) {
+  console.log("check order");
+  //For each ordered item, if playerinputcount > numberordered, show fail message
+  //For first player whose served items === ordered items, show success message, log time, player score +1
+  //Round ends when 1) any player completed round 2) all players lost
+}
+function checkForGame2Win(e) {
+  //Placeholder for win check
 }
 
 //generate array of random numbers
