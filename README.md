@@ -69,11 +69,8 @@ v1.0.0 [First version][2]
 
    --v1.1.0 Complete--
 
-4. Improve styling
-5. Add one mini game (Burger Game: https://youtu.be/Q9Ihi8B9z5U?t=128 or https://www.youtube.com/watch?v=opPbSlJPLXg&t=12s)
-
 ## 13 Jul 2023 (Stretch goal)
 
-1. Complete mini game
-
+1. Add 1 mini game - done
+2. Improve styling - done
    --v1.2.0 Complete--
