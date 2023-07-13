@@ -410,10 +410,15 @@ function renderGame2() {
   gamePage.style.display = "block"; //render game page
   document.querySelector(".gamepage-title").innerText =
     gameInstructions[1].title; //render game title
-
-  players.forEach((player) => (player.gameScreen.innerHTML = "")); //clear game screen
-  
-  //render game divs
+    
+  players.forEach((player) => {
+    player.gameScreen.innerHTML = ""; //clear game screen
+    player.gameScreen.setAttribute("class", "row player-gamescreen"); //render 3 columns on each player's screen
+    player.gameScreen.innerHTML = `<div class="col-sm-4 player-gamescreen-col" id="${player.name}-gamescreen-col-1"></div>
+    <div class="col-sm-4 player-gamescreen-col" id="${player.name}-gamescreen-col-2"></div>
+    <div class="col-sm-4 player-gamescreen-col" id="${player.name}-gamescreen-col-3"></div>`;
+  });
+  //render player controls
   renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
   renderPlayerControls(players[1].controls, gameScreenPlayer2ControlDisplay);
 }
