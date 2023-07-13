@@ -16,7 +16,7 @@ const players = [
   },
 ];
 
-const gameInstructions = [
+const games = [
   {
     gameIndex: 1,
     title: "JUST WHACK ONLY!",
@@ -38,32 +38,26 @@ const gameInstructions = [
   />`,
     text: `<p>Press the buttons to match each order precisely.</p>
     <p><strong>Too many items will spoil your job.</strong></p>
-    <p>Compete for time! </strong>Get 5 orders to win.</strong>`,
+    <p>Compete for time! </strong>Get 3 orders to win.</strong>`,
   },
 ];
 
 /*----- Cached elements -----*/
 
 //Navigation buttons
-const homepageButtons = document.querySelector("#homepage-buttons");
 const startButton = document.querySelector(".start");
 const highScoreButton = document.querySelector(".highscore");
-const homeButton = document.querySelector(".home");
-const playGame1Button = document.querySelector("#playgame1");
+const highScoreHomeButton = document.querySelector(".home");
 const gameEndHomeButton = document.querySelector("#gohome");
+const playGame1Button = document.querySelector("#playgame1");
+const playGame2Button = document.querySelector("#playgame2");
 const replayGame1Button = document.querySelector(".replaygame1");
 const nextGameButton = document.querySelector(".next-game");
 
-//Landing page elements
+//Core pages and templates
 const homepage = document.querySelector(".homepage");
 const highScorePage = document.querySelector(".highscorepage");
 const highScoreTable = document.querySelector(".high-score-table");
-
-//Game 1 page elements
-const darumaBlock = document.querySelector(".darumablock");
-const gameTimerDisplay = document.querySelectorAll(".player-timer");
-const player1ScoreDisplayBox = document.querySelector(".player1-score-display");
-const player2ScoreDisplayBox = document.querySelector(".player2-score-display");
 const gamePage = document.querySelector(".gamepage");
 const instructionPage = document.querySelector(".instructionpage");
 const instructionPagePlayer1ControlDisplay = document.querySelector(
@@ -83,7 +77,14 @@ const gameScreenPlayer2ControlDisplay = document.querySelector(
 );
 players[0].gameScreen = player1Screen;
 players[1].gameScreen = player2Screen;
-const game1EndPage = document.querySelector(".game1endpage");
+
+//Game 1 page elements
+const darumaBlock = document.querySelector(".darumablock");
+const gameTimerDisplay = document.querySelectorAll(".player-timer");
+const player1ScoreDisplayBox = document.querySelector(".player1-score-display");
+const player2ScoreDisplayBox = document.querySelector(".player2-score-display");
+
+const gameEndPage = document.querySelector(".gameendpage");
 
 //Game 1 variables
 const stackHeight = 15; // default stack height
@@ -135,15 +136,20 @@ const orderSuccessSound = new sound("./Assets/successfulorder.wav");
 /*----- event listeners -----*/
 
 highScoreButton.addEventListener("click", renderHighScorePage);
-homeButton.addEventListener("click", renderHomepage);
+highScoreHomeButton.addEventListener("click", () =>
+  switchPages(highScorePage, homepage)
+);
 startButton.addEventListener("click", () =>
-  renderGameInstructions(homepage, gameInstructions[0])
+  renderGameInstructions(homepage, games[0])
 ); //render game 1 instructions
 playGame1Button.addEventListener("click", startGame1);
-gameEndHomeButton.addEventListener("click", loadHomepage);
+playGame2Button.addEventListener("click", startGame2);
+gameEndHomeButton.addEventListener("click", () =>
+  switchPages(gameEndPage, homepage)
+);
 replayGame1Button.addEventListener("click", replayGame1);
 nextGameButton.addEventListener("click", () =>
-  renderGameInstructions(game1EndPage, gameInstructions[1])
+  renderGameInstructions(gameEndPage, games[1])
 ); //render game 2 instructions
 
 /*----- Game functions -----*/
@@ -207,6 +213,15 @@ function renderGameInstructions(currentPage, gameObject) {
     players[1].controls,
     instructionPagePlayer2ControlDisplay
   );
+
+  //Render button to start the current game
+  if (gameObject.gameIndex == 1) {
+    playGame1Button.style.display = "inline";
+    playGame2Button.style.display = "none";
+  } else if (gameObject.gameIndex == 2) {
+    playGame1Button.style.display = "none";
+    playGame2Button.style.display = "inline";
+  }
 }
 
 //Render player's controls on game screen to guide player
@@ -357,17 +372,9 @@ function checkForWin() {
 
 function renderGameEndPage(winnerName) {
   gamePage.style.display = "none";
-  game1EndPage.style.display = "block";
-
-  //Display winner
-  document.querySelector(".winning-player").innerText = `WINNER: ${winnerName}`;
-
-  //Display scores
-  // game1WinnerScore = gameTimer / 100;
-  // document.querySelector(
-  //   ".game-score-display"
-  // ).innerHTML = `Winner's Score: ${game1WinnerScore.toFixed(2)} secs`;
-  document.querySelector("#player-1-win-count").innerHTML = players[0].winCount; //not working
+  gameEndPage.style.display = "block";
+  document.querySelector(".winning-player").innerText = `WINNER: ${winnerName}`; //Display winner
+  document.querySelector("#player-1-win-count").innerHTML = players[0].winCount; //Display scores
   document.querySelector("#player-2-win-count").innerHTML = players[1].winCount;
 }
 
@@ -388,53 +395,27 @@ function checkHighScore(winner, currentScore, highScores) {
 }
 
 //When player clicks "Home", go back to homepage
+function switchPages(currentPage, newPage) {
+  currentPage.style.display = "none";
+  homepage.style.display = "block";
+}
 function loadHomepage() {
-  game1EndPage.style.display = "none";
+  gameEndPage.style.display = "none";
   homepage.style.display = "block";
 }
 //When player clicks "Play again", play same game again
 function replayGame1() {
-  game1EndPage.style.display = "none";
+  gameEndPage.style.display = "none";
   instructionPage.style.display = "block";
 }
 
 /*----- Game 2 functions -----*/
 
-function renderGame2Instructions() {
-  game1EndPage.style.display = "none";
-  instructionPage.style.display = "block";
-  document.querySelector(".instructions-title").innerText =
-    gameInstructions[1].title;
-  document.querySelector(".instructions-screenshot").innerHTML =
-    gameInstructions[1].imgHTML;
-  document.querySelector(".instructions-text").innerHTML =
-    gameInstructions[1].text;
-
-  renderPlayerControls(
-    players[0].controls,
-    instructionPagePlayer1ControlDisplay
-  );
-  renderPlayerControls(
-    players[1].controls,
-    instructionPagePlayer2ControlDisplay
-  );
-  //remove game 1 start button, create and append game 2 start button
-  playGame1Button.remove();
-  let startGame2Button = document.createElement("button");
-  startGame2Button.innerText = "Start!";
-  startGame2Button.setAttribute("class", "btn btn-danger");
-  startGame2Button.setAttribute("id", "playgame2");
-  instructionPage.appendChild(startGame2Button);
-  startGame2Button.addEventListener("click", startGame2);
-}
-
-//Start game 1 when player clicks "Start" after viewing instructions
+//Start game 2 when player clicks "Start game 2"
 function startGame2() {
-  //Reset player scores
   player1Game2Score = 0;
   player2Game2Score = 0;
 
-  //Render game
   renderGame2();
 
   //Start new round until one player wins 3 rounds
@@ -489,8 +470,7 @@ function checkforGame2Win() {
 function renderGame2() {
   instructionPage.style.display = "none"; //hide current page
   gamePage.style.display = "block"; //render game page
-  document.querySelector(".gamepage-title").innerText =
-    gameInstructions[1].title; //render game title
+  document.querySelector(".gamepage-title").innerText = games[1].title; //render game title
 
   //Render game instructions
   document.querySelector(".gamepage-instructions").innerText =
