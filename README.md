@@ -30,9 +30,9 @@ Sample Game 2
 
 # Version History
 
-- [v1.2.0][2] Add 2nd mini game
-- [v1.1.0][3] Introduce competitive gameplay
-- [v1.0.0][4] First version
+- [v1.2.0][2] - Add 2nd mini game
+- [v1.1.0][3] - Introduce competitive gameplay
+- [v1.0.0][4] - First version
 
 [2]: https://hyperbishibashwee2.netlify.app
 [3]: https://hyperbishibashwee1.netlify.app/
@@ -45,9 +45,9 @@ Sample Game 2
 
 # Credits
 
-- [Ezgif gif maker][5] - used to create instruction gifs
-- [Pixilart][6] - used to create pixel art
-- [Sound Resource][7] - source for arcade sounds
+- [Ezgif gif maker][5] - To create instruction gifs
+- [Pixilart][6] - To create pixel art
+- [Sound Resource][7] - Source for arcade sounds
 
   [5]: ezgif.com/
   [6]: https://www.pixilart.com/
