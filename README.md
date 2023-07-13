@@ -25,13 +25,15 @@ Sample Game 2
 # Getting Started
 
 [Click to Play Hyper Bishi Bashwee!][1]
-[1]:https://hyperbishibashwee0.netlify.app/
+
+[1]: https://hyperbishibashwee0.netlify.app/
 
 # Version History
 
 [v1.2.0][2] Add 2nd mini game
 [v1.1.0][3] Introduce competitive gameplay
 [v1.0.0][4] First version
+
 [2]: https://hyperbishibashwee2.netlify.app
 [3]: https://hyperbishibashwee1.netlify.app/
 [4]: https://hyperbishibashwee0.netlify.app/
