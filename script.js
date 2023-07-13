@@ -414,8 +414,14 @@ function renderGame2Instructions() {
 
 //Start game 1 when player clicks "Start" after viewing instructions
 function startGame2() {
+  //Reset player scores
+  player1Game2Score = 0;
+  player2Game2Score = 0;
+
+  //Render game
   renderGame2();
-  //if no one has won 3 rounds, play another round
+
+  //Start new round until one player wins 3 rounds
   document.addEventListener("keydown", startNewOrder);
   document.addEventListener("keydown", checkforGame2Win);
 }
@@ -471,9 +477,9 @@ function renderGame2() {
     gameInstructions[1].title; //render game title
 
   //Render game instructions
-  let game2Instruction = document.createElement("p");
-  game2Instruction.innerText = "Press Space to start new order";
-  document.querySelector(".game-body").prepend(game2Instruction);
+  document.querySelector(".gamepage-instructions").innerText =
+    "Press Space to start new order";
+
   //render new game screen
   players.forEach((player) => {
     player.gameScreen.innerHTML = ""; //clear previous screen
@@ -579,7 +585,7 @@ function checkOrder(e) {
   ) {
     if (compareArrays(orderArray, player1Game2Input)) {
       // game2Instruction.innerText =
-      //   "Player 1 got this order! <br/><br/>Press Space to start new order";
+      //   "Player 1 got this order! <br/><br/>Press Space to get next order!";
       orderSuccessSound.play();
       player1Game2Score++;
       document.querySelector("#player1-score").innerText = player1Game2Score;
