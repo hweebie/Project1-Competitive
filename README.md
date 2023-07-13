@@ -5,8 +5,13 @@ This is a branch created to work on the stretch goal.
 
 # Screenshots
 
-<img src="./Assets/gameplay-instructions.png">
+<img src="./Assets/readme-homepage.png">
+
+Sample Game 1
+<img src="./Assets/readme-game1-instructions.png">
 <img src="./Assets/competitive-gameplay.gif">
+
+Sample Game 2
 
 # Technologies Used
 
@@ -34,8 +39,8 @@ v1.0.0 [First version][2]
 
 # Next Steps
 
-- Competitive mode
 - More mini-games
+- Better error handling
 
 # Changelog
 
