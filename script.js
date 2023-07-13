@@ -370,7 +370,6 @@ function replayGame1() {
 
 /*----- Game 2 functions -----*/
 
-//TODO: Build game 2 instructions
 function renderGame2Instructions() {
   //Update page with Game 2 instructions
   homepage.style.display = "none"; //revert to game 1 end page when game done
@@ -392,11 +391,8 @@ function renderGame2Instructions() {
     players[1].controls,
     instructionPagePlayer2ControlDisplay
   );
-
-  //remove game 1 start button
+  //remove game 1 start button, create and append game 2 start button
   playGame1Button.remove();
-
-  //append game 2 start button
   let startGame2Button = document.createElement("button");
   startGame2Button.innerText = "Start!";
   startGame2Button.setAttribute("class", "btn btn-danger");
@@ -410,15 +406,16 @@ function startGame2() {
   renderGame2();
   playGame2();
 }
+
 //Render game 2 board
 function renderGame2() {
   instructionPage.style.display = "none"; //hide current page
   gamePage.style.display = "block"; //render game page
   document.querySelector(".gamepage-title").innerText =
     gameInstructions[1].title; //render game title
-
+  //render new game screen
   players.forEach((player) => {
-    player.gameScreen.innerHTML = ""; //clear game screen
+    player.gameScreen.innerHTML = ""; //clear previous screen
     player.gameScreen.setAttribute("class", "row player-gamescreen"); //render 3 columns on each player's screen
     player.gameScreen.innerHTML = `<div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-0"></div>
     <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-1"></div>
@@ -427,7 +424,7 @@ function renderGame2() {
   //render footer
   scoreDisplay.forEach((player) => {
     player.innerHTML = `Orders:    <span class="player-score">0</span><br /><br />`;
-  }); //show score for each player
+  }); //render score template for each player
   renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
   renderPlayerControls(players[1].controls, gameScreenPlayer2ControlDisplay);
 }
@@ -444,11 +441,40 @@ function playGame2() {
   document.addEventListener("keydown", checkForGame2Win);
 }
 
+//Create empty arrays for player input
+let player1Input = [0, 0, 0];
+let player2Input = [0, 0, 0];
 function serveItem(e) {
-  console.log("Key pressed:" + e.code);
-  //Check for valid key press
-  //If valid, add player's input to player input array and render on gamescreen
+  if (players[0].controls.includes(e.code)) {
+    //detect valid key input from player 1
+    console.log("Player 1 pressed:" + e.code);
+    player1SuccessSound.play();
+    if (players[0].controls.indexOf(e.code) == 0) {
+      player1Input[0] = player1Input[0] + 1;
+    } else if (players[0].controls.indexOf(e.code) == 1) {
+      player1Input[1] = player1Input[1] + 1;
+    } else if (players[0].controls.indexOf(e.code) == 2) {
+      player1Input[2] = player1Input[2] + 1;
+    }
+  } else if (players[1].controls.includes(e.code)) {
+    //detect valid key input from player 2
+    console.log("Player 2 pressed:" + e.code);
+    player2SuccessSound.play();
+    if (players[1].controls.indexOf(e.code) == 0) {
+      player2Input[0] = player2Input[0] + 1;
+    } else if (players[1].controls.indexOf(e.code) == 1) {
+      player2Input[1] = player2Input[1] + 1;
+    } else if (players[1].controls.indexOf(e.code) == 2) {
+      player2Input[2] = player2Input[2] + 1;
+    }
+  } else {
+    return;
+  }
 }
+
+//Check for valid key press
+//If valid, add player's input to player input array and render on gamescreen
+
 function checkOrder(e) {
   console.log("check order");
   //For each ordered item, if playerinputcount > numberordered, show fail message
