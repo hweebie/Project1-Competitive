@@ -51,7 +51,8 @@ const highScoreTable = document.querySelector(".high-score-table");
 //Game 1 page elements
 const darumaBlock = document.querySelector(".darumablock");
 const gameTimerDisplay = document.querySelectorAll(".player-timer");
-const scoreDisplay = document.querySelectorAll(".player-score-display");
+const player1ScoreDisplay = document.querySelector(".player1-score-display");
+const player2ScoreDisplay = document.querySelector(".player2-score-display");
 const gamePage = document.querySelector(".gamepage");
 const instructionPage = document.querySelector(".instructionpage");
 const instructionPagePlayer1ControlDisplay = document.querySelector(
@@ -88,6 +89,8 @@ let highScoreNameInput = "";
 
 //Game 2 variables
 const maxOrderPerItem = 4;
+const player1Score = document.querySelector("#player1-score");
+const player2Score = document.querySelector("#player2-score");
 
 //Sound constructor
 function sound(src) {
@@ -178,6 +181,35 @@ function renderGame1Instructions() {
   );
 }
 
+//Render player's controls on game screen to guide player
+function renderPlayerControls(playerControlArray, displayLocation) {
+  displayLocation.innerHTML = "";
+  for (let i = 0; i < playerControlArray.length; i++) {
+    const newBlock = document.createElement("div");
+    newBlock.setAttribute("class", "player-control-key");
+    //assign colour
+    if (i == 0) {
+      newBlock.style.backgroundColor = "red";
+    } else if (i == 1) {
+      newBlock.style.backgroundColor = "green";
+    } else if (i == 2) {
+      newBlock.style.backgroundColor = "blue";
+    }
+    //append to player's screen
+    if (playerControlArray[i] === "ArrowDown") {
+      newBlock.innerText = "↓";
+    } else if (playerControlArray[i] === "ArrowLeft") {
+      newBlock.innerText = "←";
+    } else if (playerControlArray[i] === "ArrowRight") {
+      newBlock.innerText = "→";
+    } else {
+      newBlock.innerText = playerControlArray[i].charAt(3);
+    }
+
+    displayLocation.append(newBlock);
+  }
+}
+
 //Start game 1 when player clicks "Start" after viewing instructions
 function startGame1() {
   renderGame1();
@@ -226,35 +258,6 @@ function renderStack(numArray) {
       playerScreen.append(newBlock);
     }
   });
-}
-
-//Render player's controls on game screen to guide player
-function renderPlayerControls(playerControlArray, displayLocation) {
-  displayLocation.innerHTML = "";
-  for (let i = 0; i < playerControlArray.length; i++) {
-    const newBlock = document.createElement("div");
-    newBlock.setAttribute("class", "player-control-key");
-    //assign colour
-    if (i == 0) {
-      newBlock.style.backgroundColor = "red";
-    } else if (i == 1) {
-      newBlock.style.backgroundColor = "green";
-    } else if (i == 2) {
-      newBlock.style.backgroundColor = "blue";
-    }
-    //append to player's screen
-    if (playerControlArray[i] === "ArrowDown") {
-      newBlock.innerText = "↓";
-    } else if (playerControlArray[i] === "ArrowLeft") {
-      newBlock.innerText = "←";
-    } else if (playerControlArray[i] === "ArrowRight") {
-      newBlock.innerText = "→";
-    } else {
-      newBlock.innerText = playerControlArray[i].charAt(3);
-    }
-
-    displayLocation.append(newBlock);
-  }
 }
 
 //Game play. Detect player keystrokes and clear blocks
@@ -422,63 +425,71 @@ function renderGame2() {
     <div class="col-sm-4 player-gamescreen-col" id="${player.name}-col-2"></div>`;
   });
   //render footer
-  scoreDisplay.forEach((player) => {
-    player.innerHTML = `Orders:    <span class="player-score">0</span><br /><br />`;
-  }); //render score template for each player
+  player1ScoreDisplay.innerHTML = `Orders won:    <span id="player1-score">0</span><br /><br />`;
+  player2ScoreDisplay.innerHTML = `Orders won:    <span id="player2-score">0</span><br /><br />`;
   renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
   renderPlayerControls(players[1].controls, gameScreenPlayer2ControlDisplay);
 }
 function playGame2() {
-  console.log("Start game 2 logic");
   //For each round
-  let orderArray = generateOrderArray(maxOrderPerItem); //Generate order array - generate array of 3 random numbers
+  orderArray = generateOrderArray(maxOrderPerItem); //Generate order array - generate array of 3 random numbers
   console.log("Orders:" + orderArray);
   renderOrder(orderArray); //Render pending orders on game screen
   document.addEventListener("keydown", serveItem); //clear blocks if player enters right key
-  document.addEventListener("keydown", checkOrder);
+  document.addEventListener("keydown", checkOrder); //TODO: if win, go to next round
 
-  //After each round ends, check for win
+  //TODO: When a player's score hits 3, game ends
   document.addEventListener("keydown", checkForGame2Win);
 }
 
 //Create empty arrays for player input
-let player1Input = [0, 0, 0];
-let player2Input = [0, 0, 0];
+let orderArray = [];
+let player1Game2Score = 0;
+let player2Game2Score = 0;
+let player1Game2Input = [0, 0, 0];
+let player2Game2Input = [0, 0, 0];
+function compareArrays(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
 function serveItem(e) {
   if (players[0].controls.includes(e.code)) {
     //detect valid key input from player 1
-    console.log("Player 1 pressed:" + e.code);
     player1SuccessSound.play();
     if (players[0].controls.indexOf(e.code) == 0) {
-      player1Input[0] = player1Input[0] + 1;
+      //If valid, add input to array TODO: render on UI
+      player1Game2Input[0] = player1Game2Input[0] + 1;
     } else if (players[0].controls.indexOf(e.code) == 1) {
-      player1Input[1] = player1Input[1] + 1;
+      player1Game2Input[1] = player1Game2Input[1] + 1;
     } else if (players[0].controls.indexOf(e.code) == 2) {
-      player1Input[2] = player1Input[2] + 1;
+      player1Game2Input[2] = player1Game2Input[2] + 1;
     }
   } else if (players[1].controls.includes(e.code)) {
     //detect valid key input from player 2
-    console.log("Player 2 pressed:" + e.code);
     player2SuccessSound.play();
     if (players[1].controls.indexOf(e.code) == 0) {
-      player2Input[0] = player2Input[0] + 1;
+      player2Game2Input[0] = player2Game2Input[0] + 1;
     } else if (players[1].controls.indexOf(e.code) == 1) {
-      player2Input[1] = player2Input[1] + 1;
+      player2Game2Input[1] = player2Game2Input[1] + 1;
     } else if (players[1].controls.indexOf(e.code) == 2) {
-      player2Input[2] = player2Input[2] + 1;
+      player2Game2Input[2] = player2Game2Input[2] + 1;
     }
   } else {
     return;
   }
 }
 
-//Check for valid key press
-//If valid, add player's input to player input array and render on gamescreen
-
 function checkOrder(e) {
-  console.log("check order");
-  //For each ordered item, if playerinputcount > numberordered, show fail message
-  //For first player whose served items === ordered items, show success message, log time, player score +1
+  if (compareArrays(orderArray, player1Game2Input)) {
+    console.log("Player 1 Wins");
+    player1Game2Score++;
+    document.querySelector("#player1-score").innerText = player1Game2Score;
+  } else if (compareArrays(orderArray, player2Game2Input)) {
+    console.log("Player 2 Wins");
+    player2Game2Score++;
+    document.querySelector("#player2-score").innerText = player2Game2Score;
+  }
+  //TODO: For each ordered item, if playerinputcount > numberordered, show fail message
   //Round ends when 1) any player completed round 2) all players lost
 }
 function checkForGame2Win(e) {
@@ -516,30 +527,6 @@ function renderOrder(orderArray) {
     }
   });
 }
-
-// //for each array item, generate a new block, assign color, and append to player's screen
-// function renderStack(numArray) {
-//   players.forEach((player) => {
-//     for (let i = 0; i < numArray.length; i++) {
-//       const newBlock = document.createElement("div");
-//       newBlock.setAttribute("class", "daruma-block");
-//       newBlock.setAttribute("value", numArray[i]);
-
-//       if (numArray[i] == 0) {
-//         newBlock.style.backgroundColor = "red";
-//         newBlock.innerText = "ʕ•́ᴥ•̀ʔ";
-//       } else if (numArray[i] == 1) {
-//         newBlock.style.backgroundColor = "green";
-//         newBlock.innerText = "(◕ ‿ ◕)";
-//       } else {
-//         newBlock.style.backgroundColor = "blue";
-//         newBlock.innerText = "(ಠ ‿ ಠ)";
-//       }
-//       const playerScreen = player.gameScreen;
-//       playerScreen.append(newBlock);
-//     }
-//   });
-// }
 
 /*----- main function -----*/
 init();
