@@ -119,6 +119,7 @@ const player2SuccessSound = new sound("./Assets/player2.wav");
 const errorSound = new sound("./Assets/error.wav");
 const highScoreSound = new sound("./Assets/victory.wav");
 const gameOverSound = new sound("./Assets/gameover.wav");
+const orderSuccessSound = new sound("./Assets/successfulorder.wav");
 
 /*----- event listeners -----*/
 
@@ -414,10 +415,8 @@ function renderGame2Instructions() {
 //Start game 1 when player clicks "Start" after viewing instructions
 function startGame2() {
   renderGame2();
-
   //if no one has won 3 rounds, play another round
   document.addEventListener("keydown", startNewOrder);
-
   document.addEventListener("keydown", checkforGame2Win);
 }
 
@@ -521,6 +520,15 @@ function serveItem(e) {
       //BUG: doesn't show beyond pending items
     } else if (players[0].controls.indexOf(e.code) == 2) {
       player1Game2Input[2] = player1Game2Input[2] + 1;
+      //replace pending eggs with eggs
+      document.querySelector("#player1-col-2").children[0].remove(); //remove last element
+      const servedEggs = document.createElement("div"); //create new coffee element and append
+      servedEggs.setAttribute("class", "game-2-item-container");
+      const eggsIcon = document.createElement("img");
+      eggsIcon.setAttribute("src", "./Assets/eggs.png");
+      eggsIcon.setAttribute("class", "game-2-item");
+      servedEggs.append(eggsIcon);
+      document.querySelector("#player1-col-2").append(servedEggs);
     }
   } else if (players[1].controls.includes(e.code)) {
     //detect valid key input from player 2
@@ -548,6 +556,14 @@ function serveItem(e) {
       //BUG: doesn't show beyond pending items
     } else if (players[1].controls.indexOf(e.code) == 2) {
       player2Game2Input[2] = player2Game2Input[2] + 1;
+      document.querySelector("#player2-col-2").children[0].remove(); //remove last element
+      const servedEggs = document.createElement("div"); //create new coffee element and append
+      servedEggs.setAttribute("class", "game-2-item-container");
+      const eggsIcon = document.createElement("img");
+      eggsIcon.setAttribute("src", "./Assets/eggs.png");
+      eggsIcon.setAttribute("class", "game-2-item");
+      servedEggs.append(eggsIcon);
+      document.querySelector("#player2-col-2").append(servedEggs);
     }
   } else {
     return;
@@ -560,11 +576,15 @@ function checkOrder(e) {
     players[1].controls.includes(e.code)
   ) {
     if (compareArrays(orderArray, player1Game2Input)) {
-      console.log("Player 1 Wins");
+      // game2Instruction.innerText =
+      //   "Player 1 got this order! <br/><br/>Press Space to start new order";
+      orderSuccessSound.play();
       player1Game2Score++;
       document.querySelector("#player1-score").innerText = player1Game2Score;
     } else if (compareArrays(orderArray, player2Game2Input)) {
-      console.log("Player 2 Wins");
+      // game2Instruction.innerText =
+      //   "Player 2 got this order! <br/><br/>Press Space to start new order";
+      orderSuccessSound.play();
       player2Game2Score++;
       document.querySelector("#player2-score").innerText = player2Game2Score;
     }
