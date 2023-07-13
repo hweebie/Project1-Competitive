@@ -488,13 +488,6 @@ function renderGame2() {
   renderPlayerControls(players[1].controls, gameScreenPlayer2ControlDisplay);
 }
 
-//Render game elements
-const servedCoffee = document.createElement("div");
-servedCoffee.setAttribute("class", "game-2-item");
-const coffeeIcon = document.createElement("img");
-coffeeIcon.setAttribute("src", "./Assets/coffee.png");
-servedCoffee.append(coffeeIcon);
-
 function serveItem(e) {
   if (players[0].controls.includes(e.code)) {
     //detect valid key input from player 1
@@ -503,10 +496,29 @@ function serveItem(e) {
       //If valid, add input to array
       //TODO: render order on UI
       player1Game2Input[0] = player1Game2Input[0] + 1;
+
+      //replace pending toast with toast
+      document.querySelector("#player1-col-0").children[0].remove(); //remove last element
+      const servedToast = document.createElement("div"); //create new coffee element and append
+      servedToast.setAttribute("class", "game-2-item-container");
+      const toastIcon = document.createElement("img");
+      toastIcon.setAttribute("src", "./Assets/toast.png");
+      toastIcon.setAttribute("class", "game-2-item");
+      servedToast.append(toastIcon);
+      document.querySelector("#player1-col-0").append(servedToast);
     } else if (players[0].controls.indexOf(e.code) == 1) {
       player1Game2Input[1] = player1Game2Input[1] + 1;
-      document.querySelector("#player1-col-1").children[0].remove();
+
+      //replace pending coffee with coffee
+      document.querySelector("#player1-col-1").children[0].remove(); //remove last element
+      const servedCoffee = document.createElement("div"); //create new coffee element and append
+      servedCoffee.setAttribute("class", "game-2-item-container");
+      const coffeeIcon = document.createElement("img");
+      coffeeIcon.setAttribute("src", "./Assets/coffee.png");
+      coffeeIcon.setAttribute("class", "game-2-item");
+      servedCoffee.append(coffeeIcon);
       document.querySelector("#player1-col-1").append(servedCoffee);
+      //BUG: doesn't show beyond pending items
     } else if (players[0].controls.indexOf(e.code) == 2) {
       player1Game2Input[2] = player1Game2Input[2] + 1;
     }
@@ -515,8 +527,25 @@ function serveItem(e) {
     player2SuccessSound.play();
     if (players[1].controls.indexOf(e.code) == 0) {
       player2Game2Input[0] = player2Game2Input[0] + 1;
+      document.querySelector("#player2-col-0").children[0].remove(); //remove last element
+      const servedToast = document.createElement("div"); //create new coffee element and append
+      servedToast.setAttribute("class", "game-2-item-container");
+      const toastIcon = document.createElement("img");
+      toastIcon.setAttribute("src", "./Assets/toast.png");
+      toastIcon.setAttribute("class", "game-2-item");
+      servedToast.append(toastIcon);
+      document.querySelector("#player2-col-0").append(servedToast);
     } else if (players[1].controls.indexOf(e.code) == 1) {
       player2Game2Input[1] = player2Game2Input[1] + 1;
+      document.querySelector("#player2-col-1").children[0].remove(); //remove last element
+      const servedCoffee = document.createElement("div"); //create new coffee element and append
+      servedCoffee.setAttribute("class", "game-2-item-container");
+      const coffeeIcon = document.createElement("img");
+      coffeeIcon.setAttribute("src", "./Assets/coffee.png");
+      coffeeIcon.setAttribute("class", "game-2-item");
+      servedCoffee.append(coffeeIcon);
+      document.querySelector("#player2-col-1").append(servedCoffee);
+      //BUG: doesn't show beyond pending items
     } else if (players[1].controls.indexOf(e.code) == 2) {
       player2Game2Input[2] = player2Game2Input[2] + 1;
     }

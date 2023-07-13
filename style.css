@@ -118,17 +118,17 @@ div {
 }
 
 .pending-order {
-  height: 40px;
+  height: 60px;
   border-style: solid;
   border-radius: 10px;
   border-color: black;
-  width: 40px;
+  width: 60px;
   margin: 1px auto;
 }
 
-.game-2-item {
-  height: 50px;
-  width: 50px;
+.game-2-item-container {
+  height: 60px;
+  width: 60px;
   margin: 1px auto;
 }
 
