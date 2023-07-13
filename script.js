@@ -19,9 +19,14 @@ const players = [
 const gameInstructions = [
   {
     gameIndex: 1,
-    title: "JUST WHACK ONLY",
-    imgHTML: "Image goes here",
-    text: "instructions!",
+    title: "JUST WHACK ONLY!",
+    imgHTML: `<img
+    src="./Assets/minigame-1-instructions.gif"
+    alt="Image showing game walkthrough"
+    id="instructions-image"
+  />`,
+    text: `<p>Hit the same colour as that of the bottom block.</p>
+    <p><strong>The fastest player wins!</strong></p>`,
   }, //TODO: update game 1 instructions
   {
     gameIndex: 2,
@@ -31,7 +36,9 @@ const gameInstructions = [
     alt="Image showing game walkthrough"
     id="instructions-image"
   />`,
-    text: "Press the buttons to match each order. <br/><br/>Too many items will spoil your job.<br/><br/><strong>Compete for time! Get 3 points to win.</strong>",
+    text: `<p>Press the buttons to match each order precisely.</p>
+    <p><strong>Too many items will spoil your job.</strong></p>
+    <p>Compete for time! </strong>Get 5 orders to win.</strong>`,
   },
 ];
 
@@ -183,6 +190,13 @@ function renderHomepage() {
 function renderGame1Instructions() {
   homepage.style.display = "none"; //hide homepage
   instructionPage.style.display = "block"; //render instructions page
+  document.querySelector(".instructions-title").innerText =
+    gameInstructions[0].title;
+  document.querySelector(".instructions-screenshot").innerHTML =
+    gameInstructions[0].imgHTML;
+  document.querySelector(".instructions-text").innerHTML =
+    gameInstructions[0].text;
+
   renderPlayerControls(
     players[0].controls,
     instructionPagePlayer1ControlDisplay
