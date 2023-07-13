@@ -86,12 +86,14 @@ div {
   border-style: solid;
   border-width: 2px;
 }
+
 .player-gamescreen-col {
   height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: end;
 }
+
 .player-1-game-footer {
   background-color: red;
   border-style: solid;
@@ -104,6 +106,7 @@ div {
   border-width: 2px;
   border-color: black;
 }
+
 .daruma-block {
   color: black;
   height: 40px;
@@ -113,6 +116,7 @@ div {
   width: 100px;
   margin: 1px auto;
 }
+
 .pending-order {
   height: 40px;
   border-style: solid;
@@ -121,16 +125,26 @@ div {
   width: 40px;
   margin: 1px auto;
 }
+
+.game-2-item {
+  height: 50px;
+  width: 50px;
+  margin: 1px auto;
+}
+
 .player-timer {
   font-size: 1.5em;
 }
+
 .gamepage-score-display {
   font-size: 1.5em;
 }
+
 .player-score-display {
   display: block;
   font-size: 1.5em;
 }
+
 .player-controls {
   font-size: 0.7em;
   background-color: darkgrey;
@@ -194,4 +208,7 @@ div {
 
 .game2page {
   display: none;
+}
+.game2orderitemimage {
+  width: 50px;
 }

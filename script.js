@@ -438,8 +438,8 @@ function startNewOrder(e) {
     player1Game2Input = [null, null, null];
     player2Game2Input = [null, null, null];
 
-    document.addEventListener("keydown", serveItem); //clear blocks if player enters right key
-    document.addEventListener("keydown", checkOrder); //TODO: if win, go to next round
+    document.addEventListener("keydown", serveItem); //record player's keys
+    document.addEventListener("keydown", checkOrder); //check whether player served right order
   }
 }
 
@@ -488,6 +488,13 @@ function renderGame2() {
   renderPlayerControls(players[1].controls, gameScreenPlayer2ControlDisplay);
 }
 
+//Render game elements
+const servedCoffee = document.createElement("div");
+servedCoffee.setAttribute("class", "game-2-item");
+const coffeeIcon = document.createElement("img");
+coffeeIcon.setAttribute("src", "./Assets/coffee.png");
+servedCoffee.append(coffeeIcon);
+
 function serveItem(e) {
   if (players[0].controls.includes(e.code)) {
     //detect valid key input from player 1
@@ -498,6 +505,8 @@ function serveItem(e) {
       player1Game2Input[0] = player1Game2Input[0] + 1;
     } else if (players[0].controls.indexOf(e.code) == 1) {
       player1Game2Input[1] = player1Game2Input[1] + 1;
+      document.querySelector("#player1-col-1").children[0].remove();
+      document.querySelector("#player1-col-1").append(servedCoffee);
     } else if (players[0].controls.indexOf(e.code) == 2) {
       player1Game2Input[2] = player1Game2Input[2] + 1;
     }
@@ -553,11 +562,11 @@ function renderOrder(orderArray) {
 
         if (i == 0) {
           //style item based on index
-          newPendingOrderItem.style.backgroundColor = "red";
+          newPendingOrderItem.style.borderColor = "red";
         } else if (i == 1) {
-          newPendingOrderItem.style.backgroundColor = "green";
+          newPendingOrderItem.style.borderColor = "green";
         } else {
-          newPendingOrderItem.style.backgroundColor = "blue";
+          newPendingOrderItem.style.borderColor = "blue";
         }
         playerScreenCol.append(newPendingOrderItem);
       }
