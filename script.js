@@ -17,12 +17,17 @@ const players = [
 ];
 
 const gameInstructions = [
-  {}, //TODO: add game 1 instructions
   {
     gameIndex: 1,
+    title: "JUST WHACK ONLY",
+    imgHTML: "Image goes here",
+    text: "instructions!",
+  }, //TODO: update game 1 instructions
+  {
+    gameIndex: 2,
     title: "KOPITIAM HERO",
     imgHTML: "Image goes here",
-    text: "Prepare the orders correctly!",
+    text: "Press the buttons to match each order. <br/><br/>Too many items will spoil your job.<br/><br/><strong>Compete for time! Get 3 points to win.</strong>",
   },
 ];
 
@@ -73,9 +78,9 @@ let gameTimer = null;
 let gameInterval = null;
 const highScores = [
   // default high scores
-  { name: "Desmond", score: 0.1 },
-  { name: "Lian Kai", score: 0.1 },
-  { name: "Chicken", score: 0.1 },
+  { name: "Desmond", score: 1 },
+  { name: "Lian Kai", score: 1 },
+  { name: "Chicken", score: 1 },
 ];
 let game1WinnerScore = 0;
 let highScoreNameInput = "";
@@ -105,11 +110,11 @@ const gameOverSound = new sound("./Assets/gameover.wav");
 
 highScoreButton.addEventListener("click", renderHighScorePage);
 homeButton.addEventListener("click", renderHomepage);
-startButton.addEventListener("click", renderGame1Instructions);
+startButton.addEventListener("click", renderGame2Instructions); //TODO: REVERT TO GAME 1 WHEN READY
 playGame1Button.addEventListener("click", startGame1);
 gameEndHomeButton.addEventListener("click", loadHomepage);
 replayGame1Button.addEventListener("click", replayGame1);
-nextGameButton.addEventListener("click", startNextGame);
+nextGameButton.addEventListener("click", renderGame2Instructions);
 
 /*----- Game functions -----*/
 
@@ -360,9 +365,10 @@ function replayGame1() {
 /*----- Game 2 functions -----*/
 
 //TODO: Build game 2 instructions
-function startNextGame() {
+function renderGame2Instructions() {
   //Update page with Game 2 instructions
-  game1EndPage.style.display = "none";
+  homepage.style.display = "none"; //revert to game 1 end page when game done
+  //game1EndPage.style.display = "none";
   instructionPage.style.display = "block";
   document.querySelector(".instructions-title").innerText =
     gameInstructions[1].title;
@@ -370,6 +376,16 @@ function startNextGame() {
     gameInstructions[1].imgHTML;
   document.querySelector(".instructions-text").innerHTML =
     gameInstructions[1].text;
+
+  //render player controls
+  renderPlayerControls(
+    players[0].controls,
+    instructionPagePlayer1ControlDisplay
+  );
+  renderPlayerControls(
+    players[1].controls,
+    instructionPagePlayer2ControlDisplay
+  );
 
   //remove game 1 start button
   playGame1Button.remove();
@@ -395,8 +411,30 @@ function renderGame2() {
 }
 function playGame2() {
   console.log("Start game 2 logic");
-  //TODO: Build game 2 logic
-}
 
+  //For each round
+  //Generate order array - generate array of 3 random numbers
+  let orderArray = generateOrderArray(maxOrderPerItem);
+  console.log(orderArray);
+  //Render orderitems on gamescreen
+  //Players can play
+  //On key press, add player's input to player input array and render on gamescreen
+  //For each ordered item, if playerinputcount > numberordered, show fail message
+  //If allplayerinputs === ordered items, show success message and log time
+  //If player was the first, player's gameScore +1
+  //Round ends when 1) any player completed round 2) all players lost
+
+  //Check for win - player gameScore ==3
+  //If win, show win message
+}
+let maxOrderPerItem = 4;
+//generate array of random numbers
+function generateOrderArray(maxOrderPerItem) {
+  let randomArray = [];
+  for (let i = 0; i < 3; i++) {
+    randomArray[i] = Math.ceil(Math.random() * maxOrderPerItem);
+  }
+  return randomArray;
+}
 /*----- main function -----*/
 init();

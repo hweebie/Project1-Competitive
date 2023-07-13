@@ -86,6 +86,16 @@ div {
   border-style: solid;
   border-width: 2px;
 }
+.player-gamescreen-col {
+  background-color: brown;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  overflow: hidden;
+  border-style: solid;
+  border-width: 2px;
+}
 .player-1-game-footer {
   background-color: red;
   border-style: solid;
