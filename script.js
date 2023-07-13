@@ -59,6 +59,7 @@ const homepage = document.querySelector(".homepage");
 const highScorePage = document.querySelector(".highscorepage");
 const highScoreTable = document.querySelector(".high-score-table");
 const gamePage = document.querySelector(".gamepage");
+const gameEndPage = document.querySelector(".gameendpage");
 const instructionPage = document.querySelector(".instructionpage");
 const instructionPagePlayer1ControlDisplay = document.querySelector(
   "#player-1-instructions-control-display"
@@ -66,7 +67,6 @@ const instructionPagePlayer1ControlDisplay = document.querySelector(
 const instructionPagePlayer2ControlDisplay = document.querySelector(
   "#player-2-instructions-control-display"
 );
-const gameScreenBody = document.querySelector(".game-body");
 const player1Screen = document.querySelector("#player-1-gamescreen");
 const player2Screen = document.querySelector("#player-2-gamescreen");
 const gameScreenPlayer1ControlDisplay = document.querySelector(
@@ -77,39 +77,6 @@ const gameScreenPlayer2ControlDisplay = document.querySelector(
 );
 players[0].gameScreen = player1Screen;
 players[1].gameScreen = player2Screen;
-
-//Game 1 page elements
-const darumaBlock = document.querySelector(".darumablock");
-const gameTimerDisplay = document.querySelectorAll(".player-timer");
-const player1ScoreDisplayBox = document.querySelector(".player1-score-display");
-const player2ScoreDisplayBox = document.querySelector(".player2-score-display");
-
-const gameEndPage = document.querySelector(".gameendpage");
-
-//Game 1 variables
-const stackHeight = 15; // default stack height
-let gameTimer = null;
-let gameInterval = null;
-const highScores = [
-  // default high scores
-  { name: "Desmond", score: 5 },
-  { name: "Lian Kai", score: 8 },
-  { name: "Chicken", score: 10 },
-];
-let game1WinnerScore = 0;
-let highScoreNameInput = "";
-
-//Game 2 variables
-const maxOrderPerItem = 4;
-const maxGame2Rounds = 6;
-let player1Game2Score = 0;
-let player2Game2Score = 0;
-let orderArray = [];
-let player1Game2Input = [null, null, null];
-let player2Game2Input = [null, null, null];
-function compareArrays(a, b) {
-  return JSON.stringify(a) === JSON.stringify(b);
-}
 
 //Sound constructor
 function sound(src) {
@@ -133,6 +100,36 @@ const highScoreSound = new sound("./Assets/victory.wav");
 const gameOverSound = new sound("./Assets/gameover.wav");
 const orderSuccessSound = new sound("./Assets/successfulorder.wav");
 
+//Game 1 variables
+const stackHeight = 15; // default stack height
+let gameTimer = null;
+let gameInterval = null;
+const highScores = [
+  // default high scores
+  { name: "Desmond", score: 5 },
+  { name: "Lian Kai", score: 8 },
+  { name: "Chicken", score: 10 },
+];
+let game1WinnerScore = 0;
+let highScoreNameInput = "";
+
+//Game 1 page elements
+const gameTimerDisplay = document.querySelectorAll(".player-timer");
+const player1ScoreDisplayBox = document.querySelector(".player1-score-display");
+const player2ScoreDisplayBox = document.querySelector(".player2-score-display");
+
+//Game 2 variables
+const maxOrderPerItem = 4;
+const maxGame2Rounds = 6;
+let player1Game2Score = 0;
+let player2Game2Score = 0;
+let orderArray = [];
+let player1Game2Input = [null, null, null];
+let player2Game2Input = [null, null, null];
+function compareArrays(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
 /*----- event listeners -----*/
 
 highScoreButton.addEventListener("click", renderHighScorePage);
@@ -142,15 +139,15 @@ highScoreHomeButton.addEventListener("click", () =>
 startButton.addEventListener("click", () =>
   renderGameInstructions(homepage, games[0])
 ); //render game 1 instructions
-playGame1Button.addEventListener("click", startGame1);
-playGame2Button.addEventListener("click", startGame2);
-gameEndHomeButton.addEventListener("click", () =>
-  switchPages(gameEndPage, homepage)
-);
-replayGame1Button.addEventListener("click", replayGame1);
 nextGameButton.addEventListener("click", () =>
   renderGameInstructions(gameEndPage, games[1])
 ); //render game 2 instructions
+gameEndHomeButton.addEventListener("click", () =>
+  switchPages(gameEndPage, homepage)
+);
+playGame1Button.addEventListener("click", startGame1);
+playGame2Button.addEventListener("click", startGame2);
+replayGame1Button.addEventListener("click", replayGame1);
 
 /*----- Game functions -----*/
 
@@ -159,7 +156,7 @@ function init() {
   homepage.style.display = "block"; //load homepage
 }
 
-//Render high scores page. Triggered by button click
+//Render high scores page
 function renderHighScorePage() {
   homepage.style.display = "none";
   highScorePage.style.display = "block";
@@ -188,15 +185,9 @@ function renderHighScoreTable(highScores) {
   }
 }
 
-//Go back from high score page to homepage. Triggered by button click
-function renderHomepage() {
-  highScorePage.style.display = "none"; //hide current page
-  homepage.style.display = "block"; //render high score page
-}
-
 /*----- Game 1 functions -----*/
 
-//Render game instructions. Triggered by player clicking "Start"
+//Render game instructions using game data
 function renderGameInstructions(currentPage, gameObject) {
   currentPage.style.display = "none"; //hide homepage
   instructionPage.style.display = "block"; //render instructions page
@@ -205,14 +196,8 @@ function renderGameInstructions(currentPage, gameObject) {
     gameObject.imgHTML;
   document.querySelector(".instructions-text").innerHTML = gameObject.text;
 
-  renderPlayerControls(
-    players[0].controls,
-    instructionPagePlayer1ControlDisplay
-  );
-  renderPlayerControls(
-    players[1].controls,
-    instructionPagePlayer2ControlDisplay
-  );
+  renderPlayerControls(players[0], instructionPagePlayer1ControlDisplay);
+  renderPlayerControls(players[1], instructionPagePlayer2ControlDisplay);
 
   //Render button to start the current game
   if (gameObject.gameIndex == 1) {
@@ -225,9 +210,9 @@ function renderGameInstructions(currentPage, gameObject) {
 }
 
 //Render player's controls on game screen to guide player
-function renderPlayerControls(playerControlArray, displayLocation) {
-  displayLocation.innerHTML = "";
-  for (let i = 0; i < playerControlArray.length; i++) {
+function renderPlayerControls(playerObject, displayLocation) {
+  displayLocation.innerHTML = `${playerObject.displayName} controls:`;
+  for (let i = 0; i < playerObject.controls.length; i++) {
     const newBlock = document.createElement("div");
     newBlock.setAttribute("class", "player-control-key");
     //assign colour
@@ -239,14 +224,14 @@ function renderPlayerControls(playerControlArray, displayLocation) {
       newBlock.style.backgroundColor = "blue";
     }
     //append to player's screen
-    if (playerControlArray[i] === "ArrowDown") {
+    if (playerObject.controls[i] === "ArrowDown") {
       newBlock.innerText = "↓";
-    } else if (playerControlArray[i] === "ArrowLeft") {
+    } else if (playerObject.controls[i] === "ArrowLeft") {
       newBlock.innerText = "←";
-    } else if (playerControlArray[i] === "ArrowRight") {
+    } else if (playerObject.controls[i] === "ArrowRight") {
       newBlock.innerText = "→";
     } else {
-      newBlock.innerText = playerControlArray[i].charAt(3);
+      newBlock.innerText = playerObject.controls[i].charAt(3);
     }
 
     displayLocation.append(newBlock);
@@ -267,8 +252,8 @@ function renderGame1() {
   renderStack(generateRandomStack(stackHeight), players); //Randomly generate and display blocks
 
   //Render footer
-  renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
-  renderPlayerControls(players[1].controls, gameScreenPlayer2ControlDisplay);
+  renderPlayerControls(players[0], gameScreenPlayer1ControlDisplay);
+  renderPlayerControls(players[1], gameScreenPlayer2ControlDisplay);
 }
 //generate array of random numbers
 function generateRandomStack(stackHeight) {
@@ -311,12 +296,12 @@ function playGame1() {
     gameTimer++;
     timerDisplay = gameTimer / 100;
     gameTimerDisplay.forEach((timer) => {
+      //display timer to 2 decimal points
       timer.innerHTML = timerDisplay.toFixed(2);
-    }); //display timer to 2 decimal points
+    });
   }
-
   document.addEventListener("keydown", clearBlocks); //clear blocks if player enters right key
-  document.addEventListener("keydown", checkForWin); //check whether player won
+  document.addEventListener("keydown", checkForGame1Win); //check whether player won
 }
 
 function clearBlocks(e) {
@@ -347,7 +332,7 @@ function clearBlocks(e) {
   }
 }
 
-function checkForWin() {
+function checkForGame1Win() {
   let winner = "";
   if (
     players[0].gameScreen.innerHTML === "" ||
@@ -355,7 +340,7 @@ function checkForWin() {
   ) {
     clearInterval(gameInterval);
     gameOverSound.play();
-    document.removeEventListener("keydown", checkForWin);
+    document.removeEventListener("keydown", checkForGame1Win);
     //update winner
     if (players[0].gameScreen.innerHTML === "") {
       winner = players[0];
@@ -487,8 +472,8 @@ function renderGame2() {
   //render footer
   player1ScoreDisplayBox.innerHTML = `Orders won:    <span id="player1-score">0</span><br /><br />`;
   player2ScoreDisplayBox.innerHTML = `Orders won:    <span id="player2-score">0</span><br /><br />`;
-  renderPlayerControls(players[0].controls, gameScreenPlayer1ControlDisplay);
-  renderPlayerControls(players[1].controls, gameScreenPlayer2ControlDisplay);
+  renderPlayerControls(players[0], gameScreenPlayer1ControlDisplay);
+  renderPlayerControls(players[1], gameScreenPlayer2ControlDisplay);
 }
 
 function serveItem(e) {
