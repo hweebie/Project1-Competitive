@@ -425,12 +425,9 @@ function renderGame2() {
 function playGame2() {
   console.log("Start game 2 logic");
   //For each round
-  //Generate order array - generate array of 3 random numbers
-
-  let orderArray = generateOrderArray(maxOrderPerItem);
+  let orderArray = generateOrderArray(maxOrderPerItem); //Generate order array - generate array of 3 random numbers
   console.log("Orders:" + orderArray);
-  //Render orderitems on gamescreen
-  renderOrder(orderArray);
+  renderOrder(orderArray); //Render pending orders on game screen
   //Players can play
   //On key press, add player's input to player input array and render on gamescreen
   //For each ordered item, if playerinputcount > numberordered, show fail message
@@ -441,6 +438,7 @@ function playGame2() {
   //Check for win - player gameScore ==3
   //If win, show win message
 }
+
 let maxOrderPerItem = 4;
 //generate array of random numbers
 function generateOrderArray(maxOrderPerItem) {
@@ -452,7 +450,6 @@ function generateOrderArray(maxOrderPerItem) {
 }
 
 function renderOrder(orderArray) {
-  console.log("render order");
   players.forEach((player) => {
     for (let i = 0; i < orderArray.length; i++) {
       const playerScreenCol = player.gameScreen.children[i];
