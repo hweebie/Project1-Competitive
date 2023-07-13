@@ -331,7 +331,7 @@ function checkForWin() {
       players[1].winCount = players[1].winCount + 1;
       renderGameEndPage(players[1].displayName);
     }
-
+    nextGameButton.style.visibility("visible");
     checkHighScore(winner, game1WinnerScore, highScores);
   }
 }
@@ -453,10 +453,12 @@ function checkforGame2Win() {
       winner = players[0];
       players[0].winCount = players[0].winCount + 1;
       renderGameEndPage(players[0].displayName);
+      nextGameButton.style.display = "none";
     } else {
       winner = players[1];
       players[1].winCount = players[1].winCount + 1;
       renderGameEndPage(players[1].displayName);
+      nextGameButton.style.display = "none";
     }
   }
 }
