@@ -147,13 +147,22 @@ gameEndHomeButton.addEventListener("click", () =>
 );
 playGame1Button.addEventListener("click", startGame1);
 playGame2Button.addEventListener("click", startGame2);
-replayGame1Button.addEventListener("click", replayGame1);
+replayGame1Button.addEventListener("click", () => {
+  console.log("clicked");
+  switchPages(gameEndPage, instructionPage);
+});
 
 /*----- Game functions -----*/
 
 //Render homepage
 function init() {
   homepage.style.display = "block"; //load homepage
+}
+
+//Function to switch pages
+function switchPages(currentPage, newPage) {
+  currentPage.style.display = "none";
+  newPage.style.display = "block";
 }
 
 //Render high scores page
@@ -379,33 +388,15 @@ function checkHighScore(winner, currentScore, highScores) {
   }
 }
 
-//When player clicks "Home", go back to homepage
-function switchPages(currentPage, newPage) {
-  currentPage.style.display = "none";
-  homepage.style.display = "block";
-}
-function loadHomepage() {
-  gameEndPage.style.display = "none";
-  homepage.style.display = "block";
-}
-//When player clicks "Play again", play same game again
-function replayGame1() {
-  gameEndPage.style.display = "none";
-  instructionPage.style.display = "block";
-}
-
 /*----- Game 2 functions -----*/
 
 //Start game 2 when player clicks "Start game 2"
 function startGame2() {
   player1Game2Score = 0;
   player2Game2Score = 0;
-
   renderGame2();
-
-  //Start new round until one player wins 3 rounds
-  document.addEventListener("keydown", startNewOrder);
-  document.addEventListener("keydown", checkforGame2Win);
+  document.addEventListener("keydown", startNewOrder); //Start new round until one player wins 3 rounds
+  document.addEventListener("keydown", checkforGame2Win); //Game ends when one player wins 3 rounds
 }
 
 function startNewOrder(e) {
@@ -485,7 +476,6 @@ function serveItem(e) {
       player1Game2Input[0] = player1Game2Input[0] + 1;
 
       //replace pending items with served items
-      //BUG: doesn't handle negative scenario: too many items
       //toast
       document.querySelector("#player1-col-0").children[0].remove();
       const servedToast = document.createElement("div");
@@ -563,14 +553,10 @@ function checkOrder(e) {
     players[1].controls.includes(e.code)
   ) {
     if (compareArrays(orderArray, player1Game2Input)) {
-      // game2Instruction.innerText =
-      //   "Player 1 got this order! <br/><br/>Press Space to get next order!";
       orderSuccessSound.play();
       player1Game2Score++;
       document.querySelector("#player1-score").innerText = player1Game2Score;
     } else if (compareArrays(orderArray, player2Game2Input)) {
-      // game2Instruction.innerText =
-      //   "Player 2 got this order! <br/><br/>Press Space to start new order";
       orderSuccessSound.play();
       player2Game2Score++;
       document.querySelector("#player2-score").innerText = player2Game2Score;
