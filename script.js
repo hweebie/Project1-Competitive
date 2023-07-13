@@ -343,10 +343,10 @@ function renderGameEndPage(winnerName) {
   document.querySelector(".winning-player").innerText = `WINNER: ${winnerName}`;
 
   //Display scores
-  game1WinnerScore = gameTimer / 100;
-  document.querySelector(
-    ".game-score-display"
-  ).innerHTML = `Winner's Score: ${game1WinnerScore.toFixed(2)} secs`;
+  // game1WinnerScore = gameTimer / 100;
+  // document.querySelector(
+  //   ".game-score-display"
+  // ).innerHTML = `Winner's Score: ${game1WinnerScore.toFixed(2)} secs`;
   document.querySelector("#player-1-win-count").innerHTML = players[0].winCount; //not working
   document.querySelector("#player-2-win-count").innerHTML = players[1].winCount;
 }
@@ -445,6 +445,21 @@ function startNewOrder(e) {
 
 function checkforGame2Win() {
   //Game ends when one player wins 3 times
+  if (player1Game2Score == 3 || player2Game2Score == 3) {
+    //end game
+    gameOverSound.play();
+    document.removeEventListener("keydown", checkforGame2Win);
+    //update winner
+    if (player1Game2Score == 3) {
+      winner = players[0];
+      players[0].winCount = players[0].winCount + 1;
+      renderGameEndPage(players[0].displayName);
+    } else {
+      winner = players[1];
+      players[1].winCount = players[1].winCount + 1;
+      renderGameEndPage(players[1].displayName);
+    }
+  }
 }
 
 //Render game 2 board
@@ -453,6 +468,11 @@ function renderGame2() {
   gamePage.style.display = "block"; //render game page
   document.querySelector(".gamepage-title").innerText =
     gameInstructions[1].title; //render game title
+
+  //Render game instructions
+  let game2Instruction = document.createElement("p");
+  game2Instruction.innerText = "Press Space to start new order";
+  document.querySelector(".game-body").prepend(game2Instruction);
   //render new game screen
   players.forEach((player) => {
     player.gameScreen.innerHTML = ""; //clear previous screen
