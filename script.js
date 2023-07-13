@@ -331,7 +331,6 @@ function checkForWin() {
       players[1].winCount = players[1].winCount + 1;
       renderGameEndPage(players[1].displayName);
     }
-    nextGameButton.style.visibility("visible");
     checkHighScore(winner, game1WinnerScore, highScores);
   }
 }
