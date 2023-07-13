@@ -75,14 +75,14 @@ players[1].gameScreen = player2Screen;
 const game1EndPage = document.querySelector(".game1endpage");
 
 //Game 1 variables
-const stackHeight = 1; // default stack height
+const stackHeight = 15; // default stack height
 let gameTimer = null;
 let gameInterval = null;
 const highScores = [
   // default high scores
-  { name: "Desmond", score: 1 },
-  { name: "Lian Kai", score: 1 },
-  { name: "Chicken", score: 1 },
+  { name: "Desmond", score: 5 },
+  { name: "Lian Kai", score: 8 },
+  { name: "Chicken", score: 10 },
 ];
 let game1WinnerScore = 0;
 let highScoreNameInput = "";
@@ -125,7 +125,7 @@ const orderSuccessSound = new sound("./Assets/successfulorder.wav");
 
 highScoreButton.addEventListener("click", renderHighScorePage);
 homeButton.addEventListener("click", renderHomepage);
-startButton.addEventListener("click", renderGame2Instructions); //TODO: REVERT TO GAME 1 WHEN READY
+startButton.addEventListener("click", renderGame1Instructions);
 playGame1Button.addEventListener("click", startGame1);
 gameEndHomeButton.addEventListener("click", loadHomepage);
 replayGame1Button.addEventListener("click", replayGame1);
@@ -382,9 +382,7 @@ function replayGame1() {
 /*----- Game 2 functions -----*/
 
 function renderGame2Instructions() {
-  //Update page with Game 2 instructions
-  homepage.style.display = "none"; //revert to game 1 end page when game done
-  //game1EndPage.style.display = "none";
+  game1EndPage.style.display = "none";
   instructionPage.style.display = "block";
   document.querySelector(".instructions-title").innerText =
     gameInstructions[1].title;
@@ -393,7 +391,6 @@ function renderGame2Instructions() {
   document.querySelector(".instructions-text").innerHTML =
     gameInstructions[1].text;
 
-  //render player controls
   renderPlayerControls(
     players[0].controls,
     instructionPagePlayer1ControlDisplay
@@ -501,12 +498,13 @@ function serveItem(e) {
     player1SuccessSound.play();
     if (players[0].controls.indexOf(e.code) == 0) {
       //If valid, add input to array
-      //TODO: render order on UI
       player1Game2Input[0] = player1Game2Input[0] + 1;
 
-      //replace pending toast with toast
-      document.querySelector("#player1-col-0").children[0].remove(); //remove last element
-      const servedToast = document.createElement("div"); //create new coffee element and append
+      //replace pending items with served items
+      //BUG: doesn't handle negative scenario: too many items
+      //toast
+      document.querySelector("#player1-col-0").children[0].remove();
+      const servedToast = document.createElement("div");
       servedToast.setAttribute("class", "game-2-item-container");
       const toastIcon = document.createElement("img");
       toastIcon.setAttribute("src", "./Assets/toast.png");
@@ -515,22 +513,20 @@ function serveItem(e) {
       document.querySelector("#player1-col-0").append(servedToast);
     } else if (players[0].controls.indexOf(e.code) == 1) {
       player1Game2Input[1] = player1Game2Input[1] + 1;
-
-      //replace pending coffee with coffee
-      document.querySelector("#player1-col-1").children[0].remove(); //remove last element
-      const servedCoffee = document.createElement("div"); //create new coffee element and append
+      //coffee
+      document.querySelector("#player1-col-1").children[0].remove();
+      const servedCoffee = document.createElement("div");
       servedCoffee.setAttribute("class", "game-2-item-container");
       const coffeeIcon = document.createElement("img");
       coffeeIcon.setAttribute("src", "./Assets/coffee.png");
       coffeeIcon.setAttribute("class", "game-2-item");
       servedCoffee.append(coffeeIcon);
       document.querySelector("#player1-col-1").append(servedCoffee);
-      //BUG: doesn't show beyond pending items
     } else if (players[0].controls.indexOf(e.code) == 2) {
       player1Game2Input[2] = player1Game2Input[2] + 1;
-      //replace pending eggs with eggs
-      document.querySelector("#player1-col-2").children[0].remove(); //remove last element
-      const servedEggs = document.createElement("div"); //create new coffee element and append
+      //eggs
+      document.querySelector("#player1-col-2").children[0].remove();
+      const servedEggs = document.createElement("div");
       servedEggs.setAttribute("class", "game-2-item-container");
       const eggsIcon = document.createElement("img");
       eggsIcon.setAttribute("src", "./Assets/eggs.png");
@@ -543,8 +539,8 @@ function serveItem(e) {
     player2SuccessSound.play();
     if (players[1].controls.indexOf(e.code) == 0) {
       player2Game2Input[0] = player2Game2Input[0] + 1;
-      document.querySelector("#player2-col-0").children[0].remove(); //remove last element
-      const servedToast = document.createElement("div"); //create new coffee element and append
+      document.querySelector("#player2-col-0").children[0].remove();
+      const servedToast = document.createElement("div");
       servedToast.setAttribute("class", "game-2-item-container");
       const toastIcon = document.createElement("img");
       toastIcon.setAttribute("src", "./Assets/toast.png");
@@ -553,19 +549,18 @@ function serveItem(e) {
       document.querySelector("#player2-col-0").append(servedToast);
     } else if (players[1].controls.indexOf(e.code) == 1) {
       player2Game2Input[1] = player2Game2Input[1] + 1;
-      document.querySelector("#player2-col-1").children[0].remove(); //remove last element
-      const servedCoffee = document.createElement("div"); //create new coffee element and append
+      document.querySelector("#player2-col-1").children[0].remove();
+      const servedCoffee = document.createElement("div");
       servedCoffee.setAttribute("class", "game-2-item-container");
       const coffeeIcon = document.createElement("img");
       coffeeIcon.setAttribute("src", "./Assets/coffee.png");
       coffeeIcon.setAttribute("class", "game-2-item");
       servedCoffee.append(coffeeIcon);
       document.querySelector("#player2-col-1").append(servedCoffee);
-      //BUG: doesn't show beyond pending items
     } else if (players[1].controls.indexOf(e.code) == 2) {
       player2Game2Input[2] = player2Game2Input[2] + 1;
-      document.querySelector("#player2-col-2").children[0].remove(); //remove last element
-      const servedEggs = document.createElement("div"); //create new coffee element and append
+      document.querySelector("#player2-col-2").children[0].remove();
+      const servedEggs = document.createElement("div");
       servedEggs.setAttribute("class", "game-2-item-container");
       const eggsIcon = document.createElement("img");
       eggsIcon.setAttribute("src", "./Assets/eggs.png");
