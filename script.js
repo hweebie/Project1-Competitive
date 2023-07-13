@@ -1,4 +1,4 @@
-/*----- constants -----*/
+/*----- Constants -----*/
 
 //Game configs
 const players = [
@@ -100,7 +100,8 @@ const highScoreSound = new sound("./Assets/victory.wav");
 const gameOverSound = new sound("./Assets/gameover.wav");
 const orderSuccessSound = new sound("./Assets/successfulorder.wav");
 
-//Game 1 variables
+/*----- Game 1 variables and game elements -----*/
+//Variables
 const stackHeight = 15; // default stack height
 let gameTimer = null;
 let gameInterval = null;
@@ -113,10 +114,11 @@ const highScores = [
 let game1WinnerScore = 0;
 let highScoreNameInput = "";
 
-//Game 1 game elements
+//Game elements
 const gameTimerDisplay = document.querySelectorAll(".player-timer");
 
-//Game 2 variables
+/*----- Game 2 variables and game elements -----*/
+//Variables
 const maxOrderPerItem = 4;
 const maxGame2Rounds = 6;
 let player1Game2Score = 0;
@@ -125,7 +127,7 @@ let orderArray = [];
 let player1Game2Input = [null, null, null];
 let player2Game2Input = [null, null, null];
 
-//Game 2 game elements
+//Game elements
 const player1ScoreDisplayBox = document.querySelector(".player1-score-display");
 const player2ScoreDisplayBox = document.querySelector(".player2-score-display");
 

@@ -12,6 +12,8 @@ Sample Game 1
 <img src="./Assets/competitive-gameplay.gif">
 
 Sample Game 2
+<img src="./Assets/readme-game2-instructions.png">
+<img src="./Assets/readme-game2-gameplay.png">
 
 # Technologies Used
 
@@ -19,28 +21,35 @@ Sample Game 2
 - HTML
 - CSS
 - Bootstrap frontend toolkit
-- [Ezgif gif maker][1] - to create instruction gifs
-- [Pixilart][4] - to create pixel art
-
-  [1]: ezgif.com/
-  [4]: https://www.pixilart.com/
 
 # Getting Started
 
-[Click to Play Hyper Bishi Bashwee!][2]
-[MVP Version][3]
-
-[2]: hyperbishibashwee.netlify.app
-[3]: https://hyperbishibashweemvp.netlify.app/
+[Click to Play Hyper Bishi Bashwee!][1]
+[1]:https://hyperbishibashwee0.netlify.app/
 
 # Version History
 
-v1.0.0 [First version][2]
+[v1.2.0][2] Add 2nd mini game
+[v1.1.0][3] Introduce competitive gameplay
+[v1.0.0][4] First version
+[2]: https://hyperbishibashwee2.netlify.app
+[3]: https://hyperbishibashwee1.netlify.app/
+[4]: https://hyperbishibashwee0.netlify.app/
 
 # Next Steps
 
 - More mini-games
 - Better error handling
+
+# Credits
+
+- [Ezgif gif maker][5] - used to create instruction gifs
+- [Pixilart][6] - used to create pixel art
+- [Sound Resource][7] - source for arcade sounds
+
+  [5]: ezgif.com/
+  [6]: https://www.pixilart.com/
+  [7]: https://www.sounds-resource.com/
 
 # Changelog
 
@@ -80,5 +89,4 @@ v1.0.0 [First version][2]
 2. Improve styling - done
 3. Allow game replays when game over - done
 4. Refactor code to reuse page templates and functions - done
-5. Re-initialise game when final game ended
    --v1.2.0 Complete--
