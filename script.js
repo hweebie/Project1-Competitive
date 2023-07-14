@@ -360,6 +360,7 @@ function checkForGame1Win() {
   ) {
     clearInterval(gameInterval);
     gameOverSound.play();
+    document.removeEventListener("keydown", clearBlocks);
     document.removeEventListener("keydown", checkForGame1Win);
     //update winner
     if (players[0].gameScreen.innerHTML === "") {
