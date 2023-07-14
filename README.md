@@ -43,15 +43,17 @@ Sample Game 2
 - More mini-games
 - Better error handling
 
-# Credits
+# Credits and references
 
 - [Ezgif gif maker][5] - To create instruction gifs
 - [Pixilart][6] - To create pixel art
-- [Sound Resource][7] - Source for arcade sounds
+- [Reference for Sound][7] - Reference to add sound
+- [Sounds Source][7] - Source for arcade sounds
 
   [5]: ezgif.com/
   [6]: https://www.pixilart.com/
-  [7]: https://www.sounds-resource.com/
+  [7]: https://www.w3schools.com/graphics/game_sound.asp
+  [8]: https://www.sounds-resource.com/
 
 # Changelog
 
