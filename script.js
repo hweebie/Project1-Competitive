@@ -121,7 +121,7 @@ const gameTimerDisplay = document.querySelectorAll(".player-timer");
 /*----- Game 2 variables and game elements -----*/
 
 //Variables
-const maxOrderPerItem = 4; // default max items per order 
+const maxOrderPerItem = 4; // default max items per order
 let player1Game2Score = 0;
 let player2Game2Score = 0;
 let orderArray = [];
@@ -158,7 +158,7 @@ replayGame1Button.addEventListener("click", () => {
 
 //Render homepage
 function init() {
-  homepage.style.display = "block"; //load homepage
+  homepage.style.display = "block";
 }
 
 //Function to switch pages
@@ -594,6 +594,8 @@ function checkforGame2Win() {
     //end game
     gameOverSound.play();
     document.removeEventListener("keydown", checkforGame2Win);
+    document.removeEventListener("keydown", serveItem);
+    document.removeEventListener("keydown", checkOrder);
     //update winner
     if (player1Game2Score == 3) {
       winner = players[0];
