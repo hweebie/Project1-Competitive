@@ -27,7 +27,7 @@ const games = [
   />`,
     text: `<p>Hit the same colour as that of the bottom block.</p>
     <p><strong>The fastest player wins!</strong></p>`,
-  }, //TODO: update game 1 instructions
+  },
   {
     gameIndex: 2,
     title: "KOPITIAM HERO",
@@ -101,6 +101,7 @@ const gameOverSound = new sound("./Assets/gameover.wav");
 const orderSuccessSound = new sound("./Assets/successfulorder.wav");
 
 /*----- Game 1 variables and game elements -----*/
+
 //Variables
 const stackHeight = 15; // default stack height
 let gameTimer = null;
@@ -118,9 +119,9 @@ let highScoreNameInput = "";
 const gameTimerDisplay = document.querySelectorAll(".player-timer");
 
 /*----- Game 2 variables and game elements -----*/
+
 //Variables
-const maxOrderPerItem = 4;
-const maxGame2Rounds = 6;
+const maxOrderPerItem = 4; // default max items per order 
 let player1Game2Score = 0;
 let player2Game2Score = 0;
 let orderArray = [];
