@@ -15,12 +15,16 @@
   <body>
     <div class="homepage">
       <div class="page-header">
-        <img src = "./Assets/homepageimage.png" alt = "game-image" id = "homepageimage">
+        <img
+          src="./Assets/homepageimage.png"
+          alt="game-image"
+          id="homepageimage"
+        />
       </div>
-      <div class="homepage-info">Version 1.1.0</div>
+      <div class="homepage-info">Version 1.2.0</div>
       <div class="homepage-buttons">
         <button type="button" class="btn btn-danger start">Start</button>
-        <button type="button" class="btn btn-light highscore">
+        <button type="button" class="btn btn-secondary highscore">
           High Scores
         </button>
       </div>
@@ -30,94 +34,124 @@
       <div class="page-header">
         <span class="high-score-title">HIGH SCORES</span>
       </div>
-      <table class = "table high-score-table"></table>
-      <button type="button" class="btn btn-warning home">Back</button>
+      <div class="page-sub-header">
+        <span class="high-score-title">GAME: JUST WHACK ONLY</span>
+      </div>
+      <div><table class="table high-score-table"></table></div>
+      <div>
+        <button type="button" class="btn btn-warning home">Back</button>
+      </div>
     </div>
 
-    <div class="container game1instructionpage" id="daruma">
+    <div class="instructionpage">
       <div class="page-header">
-        <span class="game-title">JUST WHACK ONLY!</span>
+        <span class="game-title instructions-title"></span>
       </div>
 
       <div class="page-sub-header">
         <span class="game-title">INSTRUCTIONS</span>
       </div>
       <div class="row instructions-body">
-        <div class="instructions-screenshot col-sm-4">
-          <img src = "./Assets/minigame-1-instructions.gif" alt = "Image showing game walkthrough" id = "instructions-image">
-        </div>
-        <div class="instructions-text col-sm-8">
-          <p>Hit the same colour as that of the bottom block.</p>
-          <p>Play for time.</p>
-          <p><strong>The fastest player wins!</strong></p>
-
-          <div class ="row instructions-controls bg-light">
-            <div class = "col-sm-6">
-              PLAYER 1: BASH
-              <div class ="player-controls"id="player-1-instructions-control-display"></div>
+        <div class="instructions-screenshot col-sm-4"></div>
+        <div class="instructions-right-column col-sm-8">
+          <div class="instructions-text"></div>
+          <div class="row instructions-controls">
+            <div class="col-sm-6">
+              <div
+                class="player-controls"
+                id="player-1-instructions-control-display"
+              ></div>
             </div>
-            <div class = "col-sm-6">
-              PLAYER 2: BASH
-              <div class ="player-controls"id="player-2-instructions-control-display"></div>
-            </div>       
+            <div class="col-sm-6">
+              <div
+                class="player-controls"
+                id="player-2-instructions-control-display"
+              ></div>
+            </div>
           </div>
         </div>
-
-        
       </div>
 
-      <br/>
-      <button type="button" class="btn btn-danger" id="playminigame">
-        Start!
+      <br />
+      <button type="button" class="btn btn-danger" id="playgame1">
+        Start Game 1!
+      </button>
+      <button type="button" class="btn btn-danger" id="playgame2">
+        Start Game 2!
       </button>
     </div>
 
-    <div class="game1page">
+    <div class="gamepage">
       <div class="page-header">
-        <span class="game-title">JUST WHACK ONLY!</span>
+        <span class="game-title gamepage-title">JUST WHACK ONLY!</span>
       </div>
-
+      <div class="gamepage-instructions">
+        <span class="game-title gamepage-instructions"></span>
+      </div>
       <div class="row game-body">
         <div class="col-sm-6 player-col" id="player-1-col">
           <div class="player-gamescreen" id="player-1-gamescreen"></div>
-          <div class="player-gamescreen-footer bg-dark text-white">
+          <div class="player-1-game-footer text-white">
             <span>Player 1</span><br />
-            <span class = "player-timer">0:00</span> secs<br /><br />
-            <div class ="player-controls"id="player-1-gamescreen-control-display">
-
+            <div class="gamepage-score-display player1-score-display">
+              <span class="player-timer">0:00</span> secs<br /><br />
             </div>
+            <div
+              class="player-controls"
+              id="player-1-gamescreen-control-display"
+            ></div>
           </div>
         </div>
-
         <div class="col-sm-6 player-col" id="player-2-col">
           <div class="player-gamescreen" id="player-2-gamescreen"></div>
-          <div class="player-gamescreen-footer bg-dark text-white">
+          <div
+            class="player-2-game-footer text-white"
+            id="player-2-game-footer"
+          >
             <span>Player 2</span><br />
-            <span class = "player-timer">0:00</span> secs<br /><br />
-            <div class ="player-controls"id="player-2-gamescreen-control-display">
-
+            <div class="gamepage-score-display player2-score-display">
+              <span class="player-timer">0:00</span> secs<br /><br />
             </div>
+            <div
+              class="player-controls"
+              id="player-2-gamescreen-control-display"
+            ></div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row game-over-page">
-      <div class="page-sub-header">
+    <div class="gameendpage">
+      <div class="page-header">
         <span class="winning-message">Game over!</span><br /><br />
-        <span class="winning-player"></span><br /><br />
-       </div>
-       <div class="score-container">
-        Winner's Score:
-        <span class="score-display">0:00</span><br /><br />
+        <span class="winning-player"></span><br />
       </div>
-      <div>      <button type="button" class="btn btn-warning" id="playagain">
-        Play Again
-      </button>
-</div>
-
+      <div class="game-score-display"></div>
+      <div class="row score-container">
+        <div class="col-sm-6">
+          <div class="player-1-scorecard-col">
+            Player 1 Wins: <span id="player-1-win-count"></span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="player-2-scorecard-col">
+            Player 2 Wins: <span id="player-2-win-count"></span>
+          </div>
+        </div>
+        <div></div>
+        <div>
+          <button type="button" class="btn btn-danger next-game">
+            Next Game
+          </button>
+          <button type="button" class="btn btn-secondary replaygame1">
+            Play again
+          </button>
+          <button type="button" class="btn btn-secondary home" id="gohome">
+            Home
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

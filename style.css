@@ -15,11 +15,17 @@ div {
 }
 
 .page-header {
+  font-size: 2em;
+}
+
+.page-sub-header {
   font-size: 1.5em;
 }
+
 #homepageimage {
   max-width: 800px;
 }
+
 .game-title {
   font-size: 2em;
 }
@@ -36,11 +42,7 @@ div {
   font-size: 2em;
 }
 
-.high-score-message {
-  color: orange;
-}
-
-.game1instructionpage {
+.instructionpage {
   display: none;
 }
 
@@ -48,6 +50,7 @@ div {
   border-style: solid;
   border-radius: 5px;
   border-color: black;
+  width: 300px;
   height: 300px;
 }
 
@@ -67,7 +70,7 @@ div {
   text-align: center;
 }
 
-.game1page {
+.gamepage {
   display: none;
 }
 
@@ -85,6 +88,26 @@ div {
   border-width: 2px;
 }
 
+.player-gamescreen-col {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.player-1-game-footer {
+  background-color: red;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+}
+.player-2-game-footer {
+  background-color: blue;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+}
+
 .daruma-block {
   color: black;
   height: 40px;
@@ -95,16 +118,37 @@ div {
   margin: 1px auto;
 }
 
-.player-gamescreen-footer {
-  height: 170px;
+.pending-order {
+  height: 60px;
+  border-style: solid;
+  border-radius: 10px;
+  border-color: black;
+  width: 60px;
+  margin: 1px auto;
+}
+
+.game-2-item-container {
+  height: 60px;
+  width: 60px;
+  margin: 1px auto;
 }
 
 .player-timer {
   font-size: 1.5em;
 }
 
+.gamepage-score-display {
+  font-size: 1.5em;
+}
+
+.player-score-display {
+  display: block;
+  font-size: 1.5em;
+}
+
 .player-controls {
-  font-size: 0.7em;
+  color: black;
+  font-size: 0.8em;
   background-color: darkgrey;
   border-style: solid;
   border-radius: 10px;
@@ -127,14 +171,46 @@ div {
   vertical-align: bottom;
 }
 
-.game-over-page {
+.gameendpage {
   display: none;
 }
 
 .winning-message {
+  font-size: 1.5em;
+}
+
+.game-score-display {
   font-size: 2em;
 }
 
-.winning-player {
+.player-1-scorecard-col {
+  background-color: red;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+}
+.player-2-scorecard-col {
+  background-color: blue;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 10px;
+  padding: 10px;
+  color: white;
+}
+#player-1-win-count {
   font-size: 2em;
+}
+#player-2-win-count {
+  font-size: 2em;
+}
+
+.game2page {
+  display: none;
+}
+.game2orderitemimage {
+  width: 50px;
 }
