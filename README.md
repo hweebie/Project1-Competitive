@@ -1,7 +1,7 @@
 # <Hyper Bishi Bashwee>
 
-A two-player arcade game where players play a series of competitive minigames against each other.
-This is a branch created to work on the stretch goal.
+A two-player arcade game where you and your friend can play a series of competitive minigames against each other. 
+Inspired by Bishi Bashi, a 90s arcade game. This game was developed as part of my coursework for my Software Engineering Immersive Bootcamp in General Assembly and features original pixel art.
 
 # Screenshots
 
@@ -24,6 +24,7 @@ Sample Game 2
 
 # Getting Started
 
+
 [Click to Play Hyper Bishi Bashwee!][1]
 
 [1]: https://hyperbishibashwee2.netlify.app/
@@ -37,6 +38,7 @@ Sample Game 2
 [2]: https://hyperbishibashwee2.netlify.app
 [3]: https://hyperbishibashwee1.netlify.app/
 [4]: https://hyperbishibashwee0.netlify.app/
+
 
 # Next Steps
 
