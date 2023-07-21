@@ -1,7 +1,9 @@
-# <Hyper Bishi Bashwee>
+# Hyper Bishi Bashwee
 
 A two-player arcade game where you and your friend can play a series of competitive minigames against each other. 
-Inspired by Bishi Bashi, a 90s arcade game. This game was developed as part of my coursework for my Software Engineering Immersive Bootcamp in General Assembly and features original pixel art.
+Inspired by Hyper Bishi Bashi, a 90s arcade game. 
+
+This game was developed as part of my coursework for my Software Engineering Immersive Bootcamp in General Assembly and features original pixel art.
 
 # Screenshots
 
